@@ -1,0 +1,78 @@
+﻿@model IEnumerable<QuanLiBanSach02.Product>
+@{
+    ViewBag.Title = "ListProduct";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text__center">Quản lí sản phẩm</h1>
+<div class="grid__auto">
+    <div>
+        <a class="btn btn-primary" href="@Url.Action("CreateProduct")">Thêm sản phẩm</a>
+    </div>
+    <hr />
+    <table class="table" border="1">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th class="text__center">Hành động</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <img src="~/Content/Images/@item.Image"/>
+                    @*@Html.DisplayFor(modelItem => item.Image)*@
+                    @*@Html.Image("../" + item.Image, "alt", "100")*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                    <div style="margin-left:20px;">
+                        @using (Html.BeginForm("DeleteProduct", "Product", new { id = item.ProductID }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');" />
+                        }
+                    </div>                
+                </td>
+            </tr>
+        }
+    </table>
+</div>

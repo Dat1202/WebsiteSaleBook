@@ -1,0 +1,34 @@
+﻿@model QuanLiBanSach02.Category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="grid__auto">
+        <h1 class="text-center">Sửa thể loại </h1>
+        <hr />
+        @if (TempData["ErrorEditCateMessage"] != null)
+        {
+            <div class="alert alert-danger">@TempData["ErrorEditCateMessage"]</div>
+        }
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CategoryID)
+        
+        <div class="form-floating">
+            @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="">
+            <input type="submit" value="Save" class="btn btn-primary my-btn" />
+        </div>
+
+    </div>
+}
