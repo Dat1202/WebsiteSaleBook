@@ -1,4 +1,4 @@
-﻿header {
+header {
     top: 0;
     position: sticky;
     z-index: 1;
@@ -729,7 +729,7 @@ input[type='submit']:hover {
 
 .my-btn{
     padding: 10px 20px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .form-floating{
@@ -741,12 +741,3 @@ input[type='submit']:hover {
     height: 50px;
 
 }
-
-.form-floating{
-
-}
-
-    .form-floating input {
-        width: 500px;
-        height: 60px;
-    }

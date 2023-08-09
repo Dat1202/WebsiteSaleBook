@@ -30,9 +30,14 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             try
             {
                 bool categoryExists = da.Categories.Any(s => s.CategoryName == category.CategoryName);
+                bool inputCategoryExists = da.Categories.Any(s => s.CategoryName == null);
                 if (categoryExists)
                 {
                     TempData["ErrorAddCateMessage"] = "Thể loại đã tồn tại.";
+                }
+                else if (inputCategoryExists)
+                {
+                    TempData["ErrorInputIsNull"] = "Vui lòng nhập thể loại.";
                 }
                 else
                 {
@@ -103,21 +108,28 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 
         // POST: Admin/Category/Delete/5
         [HttpPost]
-        public ActionResult DeleteCategory(int id)
+        public ActionResult DeleteCategory(int id, Product product)
         {
             try
             {
-                // Tìm thể loại dựa trên ID
-                Category category = da.Categories.FirstOrDefault(c => c.CategoryID == id);
-
-                if (category != null)
+                bool isProductInCate = da.Products.Any(c => c.CateID == id);
+                if (isProductInCate)
                 {
-                    // Xóa thể loại
-                    da.Categories.DeleteOnSubmit(category);
-                    da.SubmitChanges();
-
-                    TempData["SuccessDelete"] = "Xóa thể loại thành công.";
+                    TempData["ErrorEditCateMessage"] = "Không thể xóa";
                 }
+                else
+                {
+                    Category category = da.Categories.FirstOrDefault(c => c.CategoryID == id);
+
+                    if (category != null)
+                    {
+                        da.Categories.DeleteOnSubmit(category);
+                        da.SubmitChanges();
+
+                        TempData["SuccessDelete"] = "Xóa thể loại thành công.";
+                    }
+                }
+                  
                 
             }
             catch (Exception ex)

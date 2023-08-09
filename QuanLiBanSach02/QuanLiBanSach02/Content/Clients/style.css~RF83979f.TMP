@@ -1,4 +1,5 @@
 ﻿header {
+    height: 175px;
     top: 0;
     position: sticky;
     z-index: 1;
@@ -52,7 +53,7 @@
 
 .header__navbar-flex-user {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     z-index: 1;
     position: relative;
 }
@@ -655,7 +656,7 @@ small {
     width: 100%;
 }
 
-/*input[type='submit'] {
+.btn {
     width: 100%;
     height: 50px;
     border: 1px solid;
@@ -670,9 +671,9 @@ small {
     margin-bottom: 20px;
 }
 
-input[type='submit']:hover {
+.btn:hover {
     background-color: var(--primary-color);
-}*/
+}
 
 .signup_link {
     text-align: center;
@@ -690,63 +691,11 @@ input[type='submit']:hover {
     text-decoration: underline;
 }
 
-
-/* reponsive */
-
-@media screen and (max-width: 950px) {
-    .grid__column-2-4 {
-        width: 32%;
-        padding: 12px;  
-    }
-
-    .header__cart{
-        width: 120px;
-    }
-    .section__slogan {
-      font-size: 1.5vw;
-
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .grid__column-2-4 {
-        width: 48%;
-        padding: 12px;  
-    }
-
-    .header__search-input{
-        width: 70%;
-    }
-
-    .header__cart{
-        width: 80px;
-    }
-    .section__slogan {
-        font-size: 1.2vw;
-  
-      }
-}
-
-.my-btn{
-    padding: 10px 20px;
-    font-size: 20px;
-}
-
 .form-floating{
-    margin: 10px;
+
 }
 
 .form-floating input{
-    width: 200px;
-    height: 50px;
-
+    width:200px;
+    height:60px;
 }
-
-.form-floating{
-
-}
-
-    .form-floating input {
-        width: 500px;
-        height: 60px;
-    }

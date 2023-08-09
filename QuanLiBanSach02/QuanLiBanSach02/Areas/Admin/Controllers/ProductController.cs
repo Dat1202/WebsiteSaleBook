@@ -21,7 +21,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         // GET: Admin/Product/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Product p = da.Products.FirstOrDefault(s => s.ProductID == id);
+            return View(p);
         }
 
         // GET: Admin/Product/Create
@@ -47,7 +48,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                 bool productExists = da.Products.Any(s => s.ProductName == product.ProductName);
                 if (productExists)
                 {
-                    TempData["ErrorAddProductMessage"] = "Thể loại đã tồn tại.";
+                    TempData["ErrorAddProductMessage"] = "Sản phẩm đã tồn tại.";
                 }
                 else
                 {
@@ -73,7 +74,6 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                         Product unv = da.Products.FirstOrDefault(x => x.ProductID == id);
                         unv.Image = _FileName;
                         da.SubmitChanges();
-
                     }
 
 
@@ -92,37 +92,39 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         public ActionResult EditProduct(int id)
         {
             Product p = da.Products.FirstOrDefault(s => s.ProductID == id);
+            ViewData["LoaiSP"] = new SelectList(da.Categories, "CategoryID", "CategoryName");
 
             return View(p);
         }
 
         // POST: Admin/Product/Edit/5
         [HttpPost]
-        public ActionResult EditProduct(int id, Product product, FormCollection collection)
+        public ActionResult EditProduct(int id, Product product, FormCollection collection, HttpPostedFileBase uploadhinh)
         {
             try
             {
-                bool productExists = da.Products.Any(c => c.ProductName == product.ProductName);
+                    Product p = da.Products.First(s => s.ProductID == id);
+                    p.ProductName = product.ProductName;
+                    p.Author = product.Author;
+                    p.Price = product.Price;
+                    p.Description = product.Description;
+                    p.CateID = int.Parse(collection["LoaiSP"]);
+                TempData["SuccessEditProductMessage"] = "Cập nhật sản phẩm thành công.";
 
-                if (productExists)
-                {
-                    TempData["ErrorEditProductMessage"] = "Sản phẩm đã tồn tại.";
-                }
-                else
-                {
-                    Product c = da.Products.First(s => s.ProductID == id);
-                    c.ProductName = product.ProductName;
-                    c.Author = product.Author;
-                    c.Price = product.Price;
-                    c.Description = product.Description;
-                    c.CateID = product.CateID;
+                if (uploadhinh != null && uploadhinh.ContentLength > 0)
+                    {
+                        int idImg = id;
 
-                    da.SubmitChanges();
+                        string _FileName = "";
+                        int index = uploadhinh.FileName.IndexOf('.');
+                        _FileName = "products" + idImg.ToString() + "." + uploadhinh.FileName.Substring(index + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images"), _FileName);
+                        uploadhinh.SaveAs(_path);
+                        p.Image = _FileName;
+                    }
+                da.SubmitChanges();
 
-                    TempData["SuccessEditProductMessage"] = "Cập nhật sản phẩm thành công.";
-                    return RedirectToAction("ListProduct");
-                }
-                return RedirectToAction("EditProduct");
+                return RedirectToAction("ListProduct");
             }
             catch
             {

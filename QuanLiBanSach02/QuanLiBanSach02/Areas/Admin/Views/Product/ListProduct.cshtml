@@ -6,15 +6,27 @@
 
 <h1 class="text__center">Quản lí sản phẩm</h1>
 <div class="grid__auto">
+    @if (TempData["SuccAddCateMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccAddCateMessage"]</div>
+    }
+    @if (TempData["SuccessEditProductMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessEditProductMessage"]</div>
+    }
+    @if (TempData["SuccessDelete"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessDelete"]</div>
+    }
     <div>
-        <a class="btn btn-primary" href="@Url.Action("CreateProduct")">Thêm sản phẩm</a>
+        <a class="my-btn btn btn-primary" href="@Url.Action("CreateProduct")">Thêm sản phẩm</a>
     </div>
     <hr />
     <table class="table" border="1">
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ProductID)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
@@ -39,19 +51,19 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.ProductID)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
-                <td>
-                    <img src="~/Content/Images/@item.Image"/>
-                    @*@Html.DisplayFor(modelItem => item.Image)*@
-                    @*@Html.Image("../" + item.Image, "alt", "100")*@
+                <td class="flex-center">
+                    <div style="width:200px;">
+                        <img style="width:100%;" src="~/Content/Images/@item.Image" />
+                    </div>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)

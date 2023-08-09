@@ -5,8 +5,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text__center">Thể loại</h1>
+<h1 class="text__center">Quản lí thể loại</h1>
 <div class="grid__auto">
+
+    @if (TempData["ErrorEditCateMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorEditCateMessage"]</div>
+    }
 
     @if (TempData["SuccessDelete"] != null)
     {
@@ -21,7 +26,7 @@
         <div class="alert alert-success">@TempData["SuccessEditCateMessage"]</div>
     }
     <div>
-        <a class="btn btn-primary" href="@Url.Action("CreateCategory")">Thêm thể loại</a>
+        <a class="my-btn btn btn-primary" href="@Url.Action("CreateCategory")">Thêm thể loại</a>
     </div>
     <hr />
 
