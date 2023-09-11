@@ -1,46 +1,48 @@
 ﻿@model IEnumerable<QuanLiBanSach02.Product>
 @{
-    ViewBag.Title = "ListProduct";
+    ViewBag.Title = "Quản lí sản phẩm ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <h1 class="text__center">Quản lí sản phẩm</h1>
 <div class="grid__auto">
-    @if (TempData["SuccAddCateMessage"] != null)
+
+    @if (TempData["SuccAddProductMessage"] != null)
     {
-        <div class="alert alert-success">@TempData["SuccAddCateMessage"]</div>
+        <div class="alert alert-success">@TempData["SuccAddProductMessage"]</div>
     }
     @if (TempData["SuccessEditProductMessage"] != null)
     {
         <div class="alert alert-success">@TempData["SuccessEditProductMessage"]</div>
     }
-    @if (TempData["SuccessDelete"] != null)
+    @if (TempData["SuccessDeleteProduct"] != null)
     {
-        <div class="alert alert-success">@TempData["SuccessDelete"]</div>
+        <div class="alert alert-success">@TempData["SuccessDeleteProduct"]</div>
     }
+
     <div>
-        <a class="my-btn btn btn-primary" href="@Url.Action("CreateProduct")">Thêm sản phẩm</a>
+        <a class="my-btn btn btn-info" href="@Url.Action("CreateProduct")">Thêm sản phẩm</a>
     </div>
     <hr />
-    <table class="table" border="1">
+    <table class="table table-bordered">
         <tr>
             @*<th>
-                @Html.DisplayNameFor(model => model.ProductID)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.ProductID)
+                </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                <div>Tên sản phẩm</div>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <div>Giá sản phẩm</div>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                <div>Ảnh</div>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                <div>Chi tiết</div>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)
+                <div>Thể loại</div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Author)
@@ -50,10 +52,11 @@
 
         @foreach (var item in Model)
         {
+
             <tr>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.ProductID)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.ProductID)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
@@ -61,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td class="flex-center">
-                    <div style="width:200px;">
+                    <div style="width:150px;">
                         <img style="width:100%;" src="~/Content/Images/@item.Image" />
                     </div>
                 </td>
@@ -75,16 +78,24 @@
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
-                    <div style="margin-left:20px;">
-                        @using (Html.BeginForm("DeleteProduct", "Product", new { id = item.ProductID }, FormMethod.Post))
-                        {
-                            <input type="submit" value="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');" />
-                        }
-                    </div>                
+                    <div>
+                        <div>
+                            @Html.ActionLink("Sửa", "EditProduct", new { id = item.ProductID }, new { @class = "my-btn btn btn-info", @style = "width:100px" })
+                        </div>
+                        <div>
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.ProductID }, new { @class = "my-btn btn btn-info", @style = "width:100px; margin:5px;" })
+                        </div>
+                        <div>
+                            @using (Html.BeginForm("DeleteProduct", "Product", new { id = item.ProductID }, FormMethod.Post))
+                            {
+                                <input style="width:100px; margin:5px;" type="submit" value="Xóa" class="my-btn btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');" />
+                            }
+                        </div>
+                    </div>
                 </td>
             </tr>
         }
+
     </table>
+
 </div>

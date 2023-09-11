@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using QuanLiBanSach02.Models;
 
 namespace QuanLiBanSach02.Areas.Admin.Controllers
 {
@@ -66,7 +67,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             return View(category);
         }
 
-        
+
 
         // POST: Admin/Category/Edit/5
         [HttpPost]
@@ -112,7 +113,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         {
             try
             {
-                bool isProductInCate = da.Products.Any(c => c.CateID == id);
+                bool isProductInCate = da.Products.Any(c => c.CategoryID == id);
                 if (isProductInCate)
                 {
                     TempData["ErrorEditCateMessage"] = "Không thể xóa";
@@ -126,11 +127,11 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                         da.Categories.DeleteOnSubmit(category);
                         da.SubmitChanges();
 
-                        TempData["SuccessDelete"] = "Xóa thể loại thành công.";
+                        TempData["SuccessDeleteCategory"] = "Xóa thể loại thành công.";
                     }
                 }
-                  
-                
+
+
             }
             catch (Exception ex)
             {

@@ -1,60 +1,59 @@
 ﻿@model QuanLiBanSach02.Product
 
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    p{
+        font-size:16px;
+    }
+</style>
 <div>
     <hr />
     <div class="grid__auto">
-        <div class="flex-center">
-            <div>
-                <h1>Tên sản phẩm</h1>
+            <div style="display:flex;">
+                <div>
+                    <div style="width: 250px; margin-right: 65px; margin-left: 100px; margin-top:20px;">
+                        <img style="width:100%" src="@Url.Content($"~/Content/Images/{Model.Image}")" alt="Product Image" />                    
+                    </div>
+                </div>
+                <div>
+                    <h2>Tên sản phẩm</h2>
+                    <p>
+                        @Html.DisplayFor(model => model.ProductName)
+                    </p>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ProductName)
-                </dd>
+                    <h2>Giá sản phẩm</h2>
+                    <p>
+                        @Html.DisplayFor(model => model.Price)
+                    </p>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Price)
-                </dt>
+                    <h2>Chi tiết</h2>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Price)
-                </dd>
+                    <p>
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
+                    <h2>Thể loại</h2>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
+                    <p>
+                        @Html.DisplayFor(model => model.Category.CategoryName)
+                    </p>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.CateID)
-                </dt>
+                    <h2>Tác giả</h2>
 
-                <dd>
-                    @Html.DisplayFor(model => model.CateID)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Author)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Author)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Image)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Image)
-                </dd>
-            </div>
+                    <p>
+                        @Html.DisplayFor(model => model.Author) 
+                    </p>
+                </div>  
         </div>
-    </div>
+        <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">Thêm sản phẩm</a>
+
+        <p>
+            <a class=" my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
+            @Html.ActionLink("Sửa", "EditProduct", new { id = Model.ProductID }, new { @class= " my-btn btn btn-warning" }) 
+        </p>
+    </div> 
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

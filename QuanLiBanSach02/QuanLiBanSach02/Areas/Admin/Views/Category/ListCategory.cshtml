@@ -13,9 +13,9 @@
         <div class="alert alert-danger">@TempData["ErrorEditCateMessage"]</div>
     }
 
-    @if (TempData["SuccessDelete"] != null)
+    @if (TempData["SuccessDeleteCategory"] != null)
     {
-        <div class="alert alert-success">@TempData["SuccessDelete"]</div>
+        <div class="alert alert-success">@TempData["SuccessDeleteCategory"]</div>
     }
     @if (TempData["SuccAddCateMessage"] != null)
     {
@@ -26,47 +26,48 @@
         <div class="alert alert-success">@TempData["SuccessEditCateMessage"]</div>
     }
     <div>
-        <a class="my-btn btn btn-primary" href="@Url.Action("CreateCategory")">Thêm thể loại</a>
+        <a class="my-btn btn btn-info" href="@Url.Action("CreateCategory")">Thêm thể loại</a>
     </div>
     <hr />
 
-    <table class="table" border="1">
-        <tr style="text-align:center">
-            <th class="text__center">
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th class="text__center">Hành động</th>
-        </tr>
+<table class="table table-bordered">
+    <tr style="text-align:center">
+        <th class="text__center">
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th class="text__center">Hành động</th>
+    </tr>
 
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CategoryName)
-                    </td>
-                    <td class="flex-center">
-                        <div>
-                            <a class="btn btn-primary" href="@Url.Action("EditCategory", "Category", new { id = item.CategoryID })">Sửa</a>
-                        </div>
-
-                        <div style="margin-left:20px;">
-                            @using (Html.BeginForm("DeleteCategory", "Category", new { id = item.CategoryID }, FormMethod.Post))
-                            {
-                                <input type="submit" value="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');" />
-                            }
-                        </div>
-                    </td>
-                </tr>
-            }
-        }
-        else
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
         {
             <tr>
-                <td colspan="2"> Chưa có thể loại </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td class="flex-center">
+                    <div>
+                        @Html.ActionLink("Sửa", "EditCategory", new { id = item.CategoryID }, new { @class = "my-btn btn btn-info", @style = "width:100px" })
+                    </div>
+
+                    <div style="margin-left:20px;">
+                        @using (Html.BeginForm("DeleteCategory", "Category", new { id = item.CategoryID }, FormMethod.Post))
+                        {
+                            <input style="width:100px; margin:5px;" type="submit" value="Xóa" class="my-btn btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');" />
+                        }
+                    </div>
+                </td>
             </tr>
         }
+    }
+    else
+    {
+        <tr>
+            <td colspan="2"> Chưa có thể loại </td>
+        </tr>
+    }
 
-    </table>
+</table>
+
 </div>

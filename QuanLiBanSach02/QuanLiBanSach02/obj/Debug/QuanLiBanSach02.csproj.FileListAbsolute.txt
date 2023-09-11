@@ -159,6 +159,11 @@ D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Micro
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Microsoft.Owin.Security.Google.xml
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Microsoft.Owin.Security.Twitter.xml
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.csprojResolveAssemblyReference.cache
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.dll
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.pdb
+D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Net.Http.Formatting.dll
+D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Http.dll
+D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Http.WebHost.dll
+D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Net.Http.Formatting.xml
+D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Http.xml
+D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Http.WebHost.xml

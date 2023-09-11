@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="~/Content/Clients/style.css">
     <link rel="stylesheet" href="~/Content/Clients/base.css">
 
-    <title>Trang chủ</title>
+    <title>@ViewBag.Title</title>
 </head>
 
 <body>
@@ -43,8 +43,9 @@
             <a href="/Admin/Home/">Trang chủ</a>
             <a href="/Admin/Category/ListCategory">Thể loại</a>
             <a href="/Admin/Product/ListProduct">Sản phẩm</a>
+            <a href="/Admin/Stats/Index">Thống kê</a>
+            <a href="/Admin/cart/cart">Giỏ hàng</a>
 
-            <a href="#">Contact</a>
         </div>
 
         @RenderBody()
@@ -80,6 +81,9 @@
         </footer>
 
         <script src="~/Content/Clients/js.js"></script>
+        @RenderSection("scripts", required: false)
+
+
         </>
     </body>
 </html>
@@ -120,6 +124,5 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>*@

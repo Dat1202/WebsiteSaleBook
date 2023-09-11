@@ -11,6 +11,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
     {
         BookStoreDataContext da = new BookStoreDataContext();
 
+
         // GET: Admin/Product
         public ActionResult ListProduct()
         {
@@ -32,12 +33,12 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult ChooseCate()
-        {
-            Category cate = new Category();
-            cate.CateCollection = da.Categories.ToList<Category>();
-            return View(cate);
-        }
+        //public ActionResult ChooseCate()
+        //{
+        //    Category cate = new Category();
+        //    cate.CateCollection = da.Categories.ToList<Category>();
+        //    return View(cate);
+        //}
 
         // POST: Admin/Product/Create
         [HttpPost]
@@ -55,11 +56,11 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                     Product p = new Product();
 
                     p = product;
-                    p.CateID = int.Parse(collection["LoaiSP"]);
+                    p.CategoryID = int.Parse(collection["LoaiSP"]);
 
                     da.Products.InsertOnSubmit(p);
                     da.SubmitChanges();
-                    TempData["SuccAddCateMessage"] = "Thêm sản phẩm thành công.";
+                    TempData["SuccAddProductMessage"] = "Thêm sản phẩm thành công.";
 
                     if (uploadhinh != null && uploadhinh.ContentLength > 0)
                     {
@@ -67,7 +68,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 
                         string _FileName = "";
                         int index = uploadhinh.FileName.IndexOf('.');
-                        _FileName = "products" + id.ToString() + "."  + uploadhinh.FileName.Substring(index+1);
+                        _FileName = "products" + id.ToString() + "." + uploadhinh.FileName.Substring(index + 1);
                         string _path = Path.Combine(Server.MapPath("~/Content/Images"), _FileName);
                         uploadhinh.SaveAs(_path);
 
@@ -75,8 +76,6 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                         unv.Image = _FileName;
                         da.SubmitChanges();
                     }
-
-
 
                     return RedirectToAction("ListProduct");
                 }
@@ -92,6 +91,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         public ActionResult EditProduct(int id)
         {
             Product p = da.Products.FirstOrDefault(s => s.ProductID == id);
+
             ViewData["LoaiSP"] = new SelectList(da.Categories, "CategoryID", "CategoryName");
 
             return View(p);
@@ -103,29 +103,29 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         {
             try
             {
-                    Product p = da.Products.First(s => s.ProductID == id);
-                    p.ProductName = product.ProductName;
-                    p.Author = product.Author;
-                    p.Price = product.Price;
-                    p.Description = product.Description;
-                    p.CateID = int.Parse(collection["LoaiSP"]);
+                Product p = da.Products.First(s => s.ProductID == id);
+                p.ProductName = product.ProductName;
+                p.Author = product.Author;
+                p.Price = product.Price;
+                p.Description = product.Description;
+                p.CategoryID = int.Parse(collection["LoaiSP"]);
                 TempData["SuccessEditProductMessage"] = "Cập nhật sản phẩm thành công.";
 
                 if (uploadhinh != null && uploadhinh.ContentLength > 0)
-                    {
-                        int idImg = id;
+                {
+                    int idImg = id;
 
-                        string _FileName = "";
-                        int index = uploadhinh.FileName.IndexOf('.');
-                        _FileName = "products" + idImg.ToString() + "." + uploadhinh.FileName.Substring(index + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images"), _FileName);
-                        uploadhinh.SaveAs(_path);
-                        p.Image = _FileName;
-                    }
+                    string _FileName = "";
+                    int index = uploadhinh.FileName.IndexOf('.');
+                    _FileName = "products" + idImg.ToString() + "." + uploadhinh.FileName.Substring(index + 1);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images"), _FileName);
+                    uploadhinh.SaveAs(_path);
+                    p.Image = _FileName;
+                }
                 da.SubmitChanges();
-
                 return RedirectToAction("ListProduct");
             }
+
             catch
             {
                 return View();
@@ -153,7 +153,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                     da.Products.DeleteOnSubmit(product);
                     da.SubmitChanges();
 
-                    TempData["SuccessDelete"] = "Xóa thể loại thành công.";
+                    TempData["SuccessDeleteProduct"] = "Xóa sản phẩm thành công.";
                 }
 
             }
