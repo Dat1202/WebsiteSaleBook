@@ -1,4 +1,5 @@
-﻿@model IEnumerable<QuanLiBanSach02.spThongKeDoanhThuTheoNamResult>
+﻿@model QuanLiBanSach02.Models.CartModels
+
 
 @{
     ViewBag.Title = "Thống kê";
@@ -12,20 +13,30 @@
         <input id="ddlYear" name="year" placeholder="Nhập năm" />
         <input id="btn-search1" type="button" value="Tìm" />
 
-        <div id="container" style="display: flex;justify-content: center;width: 100%; height:600px;margin-top: 25px;margin-bottom: 10px;">
-            <canvas id="canvas"></canvas>
+        <div style="display:flex; align-items: stretch;">
+            <div style="width:35%">
+                <table id="statsContainer1"></table>
+            </div>
+            <div style="width:65%">
+                <div id="container" class="mb-4 ms-4">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
         </div>
 
 
         <h1 class="text-center">Thống kê số lượng sách đã bán</h1>
         <label for="ddlMonth">Nhập tháng:</label>
         <input id="ddlMonth" name="month" placeholder="Nhập tháng" />
-        <input id="btn-search2" type="button" value="Tìm" />
-        <div>
-            <div id="statsContainer"></div>
-
-            <div id="container" style="display: flex;justify-content: center;width: 100%; height:600px;margin-top: 25px;margin-bottom: 10px;">
-                <canvas id="canvasNumberProduct"></canvas>
+        <input id="btn-search2" type="submit" value="Tìm" />
+        <div style="display:flex; align-items: stretch;">
+            <div class="w-50">
+                <table id="statsContainer"></table>
+            </div>
+            <div class="w-50 h-50">
+                <div id="container" class="h-50 w-75 mb-4 ms-4">
+                    <canvas id="canvasNumberProduct"></canvas>
+                </div>
             </div>
         </div>
 
@@ -35,182 +46,162 @@
 @section scripts{
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
 
-        //$.ajax({
-        //    url: "/Controller/StatsNumberProductByMonth",
-        //    data: {month: 8},
-        //    success: function (result) {
-        //        var html = "";
-
-        //        $.each(result, function (i, item) {
-        //            html += "<p>" + item.ProductName + ": " + item.soLuong + "</p>";
-        //        });
-
-        //        $("#divStats").html(html);
-        //    }
-        //});
-
-
-        window.onload = () => {
-            var myChart;
-            $('#btn-search1').click(function () {
-                let year = $('#ddlYear').val();
-                if (window.myChart) {
-                    window.myChart.destroy();
-                }
-                $.get('/Admin/Stats/StatsByYear?year=' + year, function (res) {
-                    ChartProductCategoryByYear(res);
-
-                    //console.log(year)
-                });
+        $(document).ready(function () {
+            $.get('/Admin/Stats/StatsByYear', function (res) {
+                ChartProductCategoryByYear(res);
+                DisplayStatsYear(res);
             });
 
-            function ChartProductCategoryByYear(lsDataCategoryByYear) {
-                let lsLabel = [];
-                let lsDataSource = [];
+            $.get('/Admin/Stats/StatsNumberProductByMonth', function (res) {
+                ChartNumberProduct(res);
+                DisplayStatsMonth(res);
+            });
+        });
 
-                $.each(lsDataCategoryByYear, function (index, item) {
-                    lsLabel.push(item.CategoryName);
-                    lsDataSource.push(item.TongTien);
-                });
-
-                let ctx = document.getElementById('canvas').getContext('2d');
-
-                let colors = [];
-
-                for (let i = 0; i < lsLabel.length; i++) {
-                    let r = Math.random() * 255;
-                    let g = Math.random() * 255;
-                    let b = Math.random() * 255;
-                    colors.push(`rgb(${r},${g},${b},0.2)`);
-                }
-
-                myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: lsLabel,
-                        datasets: [{
-                            data: lsDataSource,
-                            backgroundColor: colors,
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: "Thống kê doanh thu theo thể loại"
-                        }
-                    }
-                });
+        let myChart;
+        $('#btn-search1').click(function () {
+            let year = $('#ddlYear').val();
+            if (myChart) {
+                myChart.destroy();
             }
 
+            $.get('/Admin/Stats/StatsByYear?year=' + year, function (res) {
+                ChartProductCategoryByYear(res);
+            });
+        });
 
-            var myChart1;
-            $('#btn-search2').click(function () {
-                let month = $('#ddlMonth').val();
-                //if (window.myChart1) {
-                //    window.myChart1.destroy();
-                //}
-                $.get('/Admin/Stats/StatsNumberProductByMonth?month=' + month, function (res) {
-                    ChartNumberProduct(res);
-                    DisplayStats(res);
+        function ChartProductCategoryByYear(lsDataCategoryByYear) {
+            let lsLabel = [];
+            let lsDataSource = [];
 
-                    //console.log(res)
-                });
+            $.each(lsDataCategoryByYear, function (index, item) {
+                lsLabel.push(item.CategoryName);
+                lsDataSource.push(item.TongTien);
             });
 
-            function DisplayStats(lsDataNumberProduct) {
-                let statsHTML = '';
+            let ctx = document.getElementById('canvas').getContext('2d');
 
-                // Generate the HTML content for the statistics
-                for (let i = 0; i < lsDataNumberProduct.length; i++) {
-                    let productName = lsDataNumberProduct[i].ProductName;
-                    let quantity = lsDataNumberProduct[i].soLuong;
+            let colors = [];
 
-                    // Format the statistics as desired
-                    let statText = `Product: ${productName}, Quantity: ${quantity}`;
-
-                    // Append the formatted statistics to the statsHTML
-                    statsHTML += `<p>${statText}</p>`;
-                }
-
-                // Update the content of the statsContainer element
-                $('#statsContainer').html(statsHTML);
+            for (let i = 0; i < lsLabel.length; i++) {
+                let r = Math.random() * 255;
+                let g = Math.random() * 255;
+                let b = Math.random() * 255;
+                colors.push(`rgb(${r},${g},${b},0.5)`);
             }
 
-            function ChartNumberProduct(lsDataNumberProduct) {
-                let lsLabel1 = [];
-                let lsDataSource1 = [];
-                //let ctx1 = document.getElementById('').getContext('2d');
-
-                $.each(lsDataNumberProduct, function (index, item) {
-                    lsLabel1.push(item.ProductName);
-                    lsDataSource1.push(item.soLuong)
-                })
-                //console.log(lsDataSource1)
-                //console.log(lsLabel1)
-                let colors1 = []
-
-                for (let i = 0; i < lsLabel1.length; i++) {
-                    let r = Math.random() * 255;
-                    let g = Math.random() * 255;
-                    let b = Math.random() * 255;
-                    colors1.push(`rgb(${r},${g},${b},0.2)`);
-                }
-
-                let ctx1 = document.getElementById('canvasNumberProduct')
-                myChart1 = new Chart(ctx1, {
-                    type: "pie",
-                    data: {
-                        labels: lsLabel1,
-                        datasets: [{
-                            backgroundColor: colors1,
-                            data: lsDataSource1
-                        }]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: "Thống kê doanh thu theo sản phẩm"
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: lsLabel,
+                    datasets: [{
+                        label:"thống kê doanh thu theo thể loại",
+                        data: lsDataSource,
+                        backgroundColor: colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
-                    }
-                });
-            }
-
-            //let barChartData = {
-            //    labels: lsLabel,
-            //    datasets: [{
-            //        label: 'Tổng tiền',
-            //        backgroundColor: colors,
-            //        borderWidth: 1,
-            //        data: lsDataSource
-            //    }, ]
-
-            //};
-
-            //let myBar = new Chart(ctx, {
-            //    type: 'bar',
-            //    data: barChartData,
-            //    options: {
-            //        scales: {
-            //            y: {
-            //                beginAtZero: true
-            //            }
-            //        }
-            //    }
-            //});
+                    },
+                }
+            });
         }
+
+        function DisplayStatsYear(lsDataCategoryByYear) {
+            let statsHTML = `<tr>
+                                <th>Tên thể loại</th>
+                                <th>Doanh thu</th>
+                             </tr>`;
+
+            for (let i = 0; i < lsDataCategoryByYear.length; i++) {
+                let cateName = lsDataCategoryByYear[i].CategoryName;
+                let price = lsDataCategoryByYear[i].TongTien;
+
+                let statText = `<tr><td>${cateName}</td> <td>${price} </td></tr>`;
+
+                statsHTML += `${statText}`;
+            }
+            console.log(lsDataCategoryByYear)
+
+            $('#statsContainer1').html(statsHTML);
+        }
+
+        let myChart1;
+        $('#btn-search2').click(function () {
+            let month = $('#ddlMonth').val();
+            if (myChart1) {
+                myChart1.destroy();
+            }
+            $.get('/Admin/Stats/StatsNumberProductByMonth?month=' + month, function (res) {
+                ChartNumberProduct(res);
+                DisplayStats(res);
+            });
+        });
+
+        function DisplayStatsMonth(lsDataNumberProduct) {
+            let statsHTML = `<tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                             </tr>`;
+
+            for (let i = 0; i < lsDataNumberProduct.length; i++) {
+                let productName = lsDataNumberProduct[i].ProductName;
+                let quantity = lsDataNumberProduct[i].soLuong;
+
+                let statText = `<tr><td>${productName}</td> <td>${quantity} </td></tr>`;
+
+                statsHTML += `${statText}`;
+            }
+
+            $('#statsContainer').html(statsHTML);
+        }
+
+        function ChartNumberProduct(lsDataNumberProduct) {
+            let lsLabel1 = [];
+            let lsDataSource1 = [];
+
+            $.each(lsDataNumberProduct, function (index, item) {
+                lsLabel1.push(item.ProductName);
+                lsDataSource1.push(item.soLuong)
+            });
+
+            let colors1 = [];
+
+            for (let i = 0; i < lsLabel1.length; i++) {
+                let r = Math.random() * 255;
+                let g = Math.random() * 255;
+                let b = Math.random() * 255;
+                colors1.push(`rgb(${r},${g},${b},0.5)`);
+            }
+
+            let ctx1 = document.getElementById("canvasNumberProduct").getContext('2d');
+
+            myChart1 = new Chart(ctx1, {
+                type: "pie",
+                data: {
+                    labels: lsLabel1,
+                    datasets: [{
+                        label: 'Số lượng sản phẩm theo thể loại',
+                        backgroundColor: colors1,
+                        data: lsDataSource1
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Thống kê doanh thu theo sản phẩm"
+                    }
+                }
+            });
+        }
+
     </script>
 }

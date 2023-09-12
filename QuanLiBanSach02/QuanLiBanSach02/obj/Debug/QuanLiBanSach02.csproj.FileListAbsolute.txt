@@ -167,3 +167,4 @@ D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Syste
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Net.Http.Formatting.xml
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Http.xml
 D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Http.WebHost.xml
+D:\OU\ltcsdl\BookStore\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.csprojResolveAssemblyReference.cache

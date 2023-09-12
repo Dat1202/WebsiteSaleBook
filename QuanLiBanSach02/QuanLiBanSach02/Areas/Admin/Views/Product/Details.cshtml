@@ -1,4 +1,4 @@
-﻿@model QuanLiBanSach02.Product
+﻿@model QuanLiBanSach02.Models.Product
 
 @{
     ViewBag.Title = "Chi tiết sản phẩm";
@@ -51,7 +51,7 @@
         <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">Thêm sản phẩm</a>
 
         <p>
-            <a class=" my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
+            <a class="my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
             @Html.ActionLink("Sửa", "EditProduct", new { id = Model.ProductID }, new { @class= " my-btn btn btn-warning" }) 
         </p>
     </div> 

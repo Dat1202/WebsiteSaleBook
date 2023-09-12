@@ -12,7 +12,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 {
     public class CartController : Controller
     {
-        BookStoreDataContext da = new BookStoreDataContext();
+        private BookStoreEntities da = new BookStoreEntities();
         // GET: Admin/Cart
         public ActionResult Cart()
         {
@@ -76,7 +76,9 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         public ActionResult Order(string email, string phone)
         {
             List<CartModels> cart = Session["cart"] as List<CartModels>;
-
+            string sMsg = "<html><body><table border= \"1\" ><caption>Thông tin đặt hàng</caption><tr><th>STT</th><th>Tên hàng</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr>";
+            int i = 0;
+            double tongTien = 0;
 
             using (TransactionScope scope = new TransactionScope())
             {
@@ -91,8 +93,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                         Order order = new Order();
                         order.OrderDate = DateTime.Now;
 
-                        da.Orders.InsertOnSubmit(order);
-                        da.SubmitChanges();
+                        da.Orders.Add(order);
+                        da.SaveChanges();
 
                         var idOrder = order.OrderID;
 
@@ -103,12 +105,28 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                             orderDetail.ProductID = item.ProductID;
                             orderDetail.UnitPrice = item.Price;
                             orderDetail.Quantity = item.Quantity;
-                            da.OrderDetails.InsertOnSubmit(orderDetail);
-                            da.SubmitChanges();
+                            da.OrderDetails.Add(orderDetail);
+                            da.SaveChanges();
 
- 
+                            i++;
+                            sMsg += "<tr>";
+                            sMsg += "<td>" + i.ToString() + "</td>";
+                            sMsg += "<td>" + item.ProductName + "</td>";
+                            sMsg += "<td>" + item.Quantity.ToString() + "</td>";
+                            sMsg += "<td>" + item.Price.ToString() + "</td>";
+                            sMsg += "<td>" + String.Format("{0:#,###}", item.Quantity * item.Price) + "</td>";
+                            sMsg += "</tr>";
+                            tongTien += item.Quantity * item.Price;
                         }
 
+                        sMsg += "<tr><th colspan='5'>Tổng cộng: " + String.Format("{0:#,###}", tongTien) + "</th></tr></table></body></html>";
+
+                        MailMessage mail = new MailMessage("2051052027dat@ou.edu.vn", email, "Thông tin đơn hàng", sMsg);
+                        SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                        client.EnableSsl = true;
+                        client.Credentials = new NetworkCredential("2051052027dat@ou.edu.vn", "Dat?123456789");
+                        mail.IsBodyHtml = true;
+                        client.Send(mail);
 
                         scope.Complete();
                         cart.Clear();

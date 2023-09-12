@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using QuanLiBanSach02.Models;
 
 namespace QuanLiBanSach02.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
-        BookStoreDataContext da = new BookStoreDataContext();
-
+        private BookStoreEntities da = new BookStoreEntities();
 
         // GET: Admin/Product
         public ActionResult ListProduct()
@@ -58,8 +58,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                     p = product;
                     p.CategoryID = int.Parse(collection["LoaiSP"]);
 
-                    da.Products.InsertOnSubmit(p);
-                    da.SubmitChanges();
+                    da.Products.Add(p);
+                    da.SaveChanges();
                     TempData["SuccAddProductMessage"] = "Thêm sản phẩm thành công.";
 
                     if (uploadhinh != null && uploadhinh.ContentLength > 0)
@@ -74,7 +74,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 
                         Product unv = da.Products.FirstOrDefault(x => x.ProductID == id);
                         unv.Image = _FileName;
-                        da.SubmitChanges();
+                        da.SaveChanges();
                     }
 
                     return RedirectToAction("ListProduct");
@@ -122,7 +122,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                     uploadhinh.SaveAs(_path);
                     p.Image = _FileName;
                 }
-                da.SubmitChanges();
+                da.SaveChanges();
                 return RedirectToAction("ListProduct");
             }
 
@@ -150,8 +150,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                 if (product != null)
                 {
                     // Xóa thể loại
-                    da.Products.DeleteOnSubmit(product);
-                    da.SubmitChanges();
+                    da.Products.Remove(product);
+                    da.SaveChanges();
 
                     TempData["SuccessDeleteProduct"] = "Xóa sản phẩm thành công.";
                 }

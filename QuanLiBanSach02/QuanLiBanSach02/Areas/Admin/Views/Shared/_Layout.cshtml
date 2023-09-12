@@ -18,45 +18,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
     <link rel="stylesheet" href="~/Content/Clients/style.css">
     <link rel="stylesheet" href="~/Content/Clients/base.css">
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>@ViewBag.Title</title>
 </head>
 
 <body>
-    <div class="header grid__auto">
+    <div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:12%">
+        <a href="/Admin/Category/ListCategory" class="w3-bar-item w3-button">Thể loại</a>
+        <a href="/Admin/Product/ListProduct" class="w3-bar-item w3-button">Sản phẩm</a>
+        <a href="/Admin/Stats/Index" class="w3-bar-item w3-button">Thống kê</a>
+        <a href="/Admin/cart/cart" class="w3-bar-item w3-button">Giỏ hàng</a>
 
-        <div class="header__navbar-flex-user grid__auto ">
-            <span style="font-size:30px;cursor:pointer;margin: 2px 15px;" onclick="openNav()">&#9776; </span>
-
-            <ul class="header__navbar-items ">
-                <li class="header__navbar-item">
-                    <a href="login.html">Đăng nhập</a>
-                </li>
-                <li class="header__navbar-item">
-                    <a href="register.html">Đăng ký</a>
-                </li>
-            </ul>
-        </div>
+        @*<div class="w3-dropdown-hover">
+            <button class="w3-button">
+                Dropdown
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block">
+                <a href="#" class="w3-bar-item w3-button">Link</a>
+                <a href="#" class="w3-bar-item w3-button">Link</a>
+            </div>*@
+        @*</div>*@
     </div>
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+
+        @*<div id="mySidenav" class="sidenav" style="width: 170px;">
             <a href="/Admin/Home/">Trang chủ</a>
             <a href="/Admin/Category/ListCategory">Thể loại</a>
             <a href="/Admin/Product/ListProduct">Sản phẩm</a>
             <a href="/Admin/Stats/Index">Thống kê</a>
             <a href="/Admin/cart/cart">Giỏ hàng</a>
+        </div>*@
 
-        </div>
-
+    <div style="margin-left:100px;">
         @RenderBody()
-
+    </div>
         <!-- footer -->
-        <footer class="footer">
+        @*<footer class="footer">
             <div class="grid__auto">
                 <div class="footer-flex">
                     <div class="footer__content">
                         <div class="footer__content-container">
-                            <h3>TRÙM ĂN VẶT</h3>
                             <p>
                                 Giao hàng mọi nơi trong thời gian nhanh nhất,
                                 nhận hàng nhanh chóng. Hình ảnh chụp thật 100%,
@@ -69,16 +72,14 @@
                     <div class="footer__contact">
                         <div class="footer__contact-container">
                             <h3>THÔNG TIN LIÊN HỆ</h3>
-                            <p><i class="fa-solid fa-building"></i>Trùm ăn vặt</p>
                             <p><i class="fa-solid fa-map-location-dot"></i>126 Nguyễn Văn Công</p>
-                            <p><i class="fa-solid fa-envelope"></i>Email: trumanvat@gmail.com</p>
                             <p><i class="fa-solid fa-phone"></i>Điện thoại:0971099313</p>
                         </div>
                     </div>
                 </div>
                 <div class="copyright">Copyright &copy; Wolf</div>
             </div>
-        </footer>
+        </footer>*@
 
         <script src="~/Content/Clients/js.js"></script>
         @RenderSection("scripts", required: false)
@@ -87,42 +88,3 @@
         </>
     </body>
 </html>
-@*<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-</body>
-</html>*@

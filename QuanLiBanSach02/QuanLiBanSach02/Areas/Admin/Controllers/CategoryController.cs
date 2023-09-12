@@ -9,7 +9,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
-        BookStoreDataContext da = new BookStoreDataContext();
+        private BookStoreEntities da = new BookStoreEntities();
 
         // GET: Admin/Category/ListCategory
         public ActionResult ListCategory()
@@ -44,8 +44,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                 {
                     Category c = new Category();
                     c = category;
-                    da.Categories.InsertOnSubmit(c);
-                    da.SubmitChanges();
+                    da.Categories.Add(c);
+                    da.SaveChanges();
                     TempData["SuccAddCateMessage"] = "Thêm thể loại thành công.";
 
                     return RedirectToAction("ListCategory");
@@ -85,7 +85,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                 {
                     Category c = da.Categories.First(s => s.CategoryID == id);
                     c.CategoryName = category.CategoryName;
-                    da.SubmitChanges();
+                    da.SaveChanges();
 
                     TempData["SuccessEditCateMessage"] = "Cập nhật thể loại thành công.";
                     return RedirectToAction("ListCategory");
@@ -124,8 +124,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 
                     if (category != null)
                     {
-                        da.Categories.DeleteOnSubmit(category);
-                        da.SubmitChanges();
+                        da.Categories.Remove(category);
+                        da.SaveChanges();
 
                         TempData["SuccessDeleteCategory"] = "Xóa thể loại thành công.";
                     }

@@ -8,7 +8,7 @@ namespace QuanLiBanSach02.Models
     [Serializable]
     public class CartModels
     {
-        BookStoreDataContext da = new BookStoreDataContext();
+        private BookStoreEntities da = new BookStoreEntities();
 
         public int ProductID { get; set; }
         public String ProductName { get; set; }

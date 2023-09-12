@@ -1,7 +1,7 @@
-﻿@model QuanLiBanSach02.Category
+﻿@model QuanLiBanSach02.Models.Category
 
 @{
-    ViewBag.Title = "Thêm thể loại";
+    ViewBag.Title = "CreateCategory";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,7 +18,7 @@
                 {
                     <div class="alert alert-danger">@TempData["ErrorAddCateMessage"]</div>
                 }
-                
+
                 @if (TempData["ErrorInputIsNull"] != null)
                 {
                     <div class="alert alert-danger">@TempData["ErrorInputIsNull"]</div>
