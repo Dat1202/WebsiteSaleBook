@@ -1,0 +1,207 @@
+﻿@model QuanLiBanSach02.Models.CartModels
+
+
+@{
+    ViewBag.Title = "Thống kê";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid__auto">
+    <div>
+        <h1 class="text-center">Thống kê doanh thu theo thể loại</h1>
+        <label for="ddlYear">Nhập năm:</label>
+        <input id="ddlYear" name="year" placeholder="Nhập năm" />
+        <input id="btn-search1" type="button" value="Tìm" />
+
+        <div style="display:flex; align-items: stretch;">
+            <div style="width:35%">
+                <table id="statsContainer1"></table>
+            </div>
+            <div style="width:65%">
+                <div id="container" class="mb-4 ms-4">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+        <h1 class="text-center">Thống kê số lượng sách đã bán</h1>
+        <label for="ddlMonth">Nhập tháng:</label>
+        <input id="ddlMonth" name="month" placeholder="Nhập tháng" />
+        <input id="btn-search2" type="submit" value="Tìm" />
+        <div style="display:flex; align-items: stretch;">
+            <div class="w-50">
+                <table id="statsContainer"></table>
+            </div>
+            <div class="w-50 h-50">
+                <div id="container" class="h-50 w-75 mb-4 ms-4">
+                    <canvas id="canvasNumberProduct"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $.get('/Admin/Stats/StatsByYear', function (res) {
+                ChartProductCategoryByYear(res);
+                DisplayStatsYear(res);
+            });
+
+            $.get('/Admin/Stats/StatsNumberProductByMonth', function (res) {
+                ChartNumberProduct(res);
+                DisplayStatsMonth(res);
+            });
+        });
+
+        let myChart;
+        $('#btn-search1').click(function () {
+            let year = $('#ddlYear').val();
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            $.get('/Admin/Stats/StatsByYear?year=' + year, function (res) {
+                ChartProductCategoryByYear(res);
+            });
+        });
+
+        function ChartProductCategoryByYear(lsDataCategoryByYear) {
+            let lsLabel = [];
+            let lsDataSource = [];
+
+            $.each(lsDataCategoryByYear, function (index, item) {
+                lsLabel.push(item.CategoryName);
+                lsDataSource.push(item.TongTien);
+            });
+
+            let ctx = document.getElementById('canvas').getContext('2d');
+
+            let colors = [];
+
+            for (let i = 0; i < lsLabel.length; i++) {
+                let r = Math.random() * 255;
+                let g = Math.random() * 255;
+                let b = Math.random() * 255;
+                colors.push(`rgb(${r},${g},${b},0.5)`);
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: lsLabel,
+                    datasets: [{
+                        label:"thống kê doanh thu theo thể loại",
+                        data: lsDataSource,
+                        backgroundColor: colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                }
+            });
+        }
+
+        function DisplayStatsYear(lsDataCategoryByYear) {
+            let statsHTML = `<tr>
+                                <th>Tên thể loại</th>
+                                <th>Doanh thu</th>
+                             </tr>`;
+
+            for (let i = 0; i < lsDataCategoryByYear.length; i++) {
+                let cateName = lsDataCategoryByYear[i].CategoryName;
+                let price = lsDataCategoryByYear[i].TongTien;
+
+                let statText = `<tr><td>${cateName}</td> <td>${price} </td></tr>`;
+
+                statsHTML += `${statText}`;
+            }
+            console.log(lsDataCategoryByYear)
+
+            $('#statsContainer1').html(statsHTML);
+        }
+
+        let myChart1;
+        $('#btn-search2').click(function () {
+            let month = $('#ddlMonth').val();
+            if (myChart1) {
+                myChart1.destroy();
+            }
+            $.get('/Admin/Stats/StatsNumberProductByMonth?month=' + month, function (res) {
+                ChartNumberProduct(res);
+                DisplayStats(res);
+            });
+        });
+
+        function DisplayStatsMonth(lsDataNumberProduct) {
+            let statsHTML = `<tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                             </tr>`;
+
+            for (let i = 0; i < lsDataNumberProduct.length; i++) {
+                let productName = lsDataNumberProduct[i].ProductName;
+                let quantity = lsDataNumberProduct[i].soLuong;
+
+                let statText = `<tr><td>${productName}</td> <td>${quantity} </td></tr>`;
+
+                statsHTML += `${statText}`;
+            }
+
+            $('#statsContainer').html(statsHTML);
+        }
+
+        function ChartNumberProduct(lsDataNumberProduct) {
+            let lsLabel1 = [];
+            let lsDataSource1 = [];
+
+            $.each(lsDataNumberProduct, function (index, item) {
+                lsLabel1.push(item.ProductName);
+                lsDataSource1.push(item.soLuong)
+            });
+
+            let colors1 = [];
+
+            for (let i = 0; i < lsLabel1.length; i++) {
+                let r = Math.random() * 255;
+                let g = Math.random() * 255;
+                let b = Math.random() * 255;
+                colors1.push(`rgb(${r},${g},${b},0.5)`);
+            }
+
+            let ctx1 = document.getElementById("canvasNumberProduct").getContext('2d');
+
+            myChart1 = new Chart(ctx1, {
+                type: "pie",
+                data: {
+                    labels: lsLabel1,
+                    datasets: [{
+                        label: 'Số lượng sản phẩm theo thể loại',
+                        backgroundColor: colors1,
+                        data: lsDataSource1
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Thống kê doanh thu theo sản phẩm"
+                    }
+                }
+            });
+        }
+
+    </script>
+}
