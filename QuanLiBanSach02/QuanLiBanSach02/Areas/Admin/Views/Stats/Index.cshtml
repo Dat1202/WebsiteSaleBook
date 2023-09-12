@@ -5,44 +5,49 @@
     ViewBag.Title = "Thống kê";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@if (Session["UserRole"] as string == "Admin")
+{
+    <div class="grid__auto">
+        <div>
+            <h1 class="text-center">Thống kê doanh thu theo thể loại</h1>
+            <label for="ddlYear">Nhập năm:</label>
+            <input id="ddlYear" name="year" placeholder="Nhập năm" />
+            <input id="btn-search1" type="button" value="Tìm" />
 
-<div class="grid__auto">
-    <div>
-        <h1 class="text-center">Thống kê doanh thu theo thể loại</h1>
-        <label for="ddlYear">Nhập năm:</label>
-        <input id="ddlYear" name="year" placeholder="Nhập năm" />
-        <input id="btn-search1" type="button" value="Tìm" />
-
-        <div style="display:flex; align-items: stretch;">
-            <div style="width:35%">
-                <table id="statsContainer1"></table>
-            </div>
-            <div style="width:65%">
-                <div id="container" class="mb-4 ms-4">
-                    <canvas id="canvas"></canvas>
+            <div style="display:flex; align-items: stretch;">
+                <div style="width:35%">
+                    <table id="statsContainer1"></table>
+                </div>
+                <div style="width:65%">
+                    <div id="container" class="mb-4 ms-4">
+                        <canvas id="canvas"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        <h1 class="text-center">Thống kê số lượng sách đã bán</h1>
-        <label for="ddlMonth">Nhập tháng:</label>
-        <input id="ddlMonth" name="month" placeholder="Nhập tháng" />
-        <input id="btn-search2" type="submit" value="Tìm" />
-        <div style="display:flex; align-items: stretch;">
-            <div class="w-50">
-                <table id="statsContainer"></table>
-            </div>
-            <div class="w-50 h-50">
-                <div id="container" class="h-50 w-75 mb-4 ms-4">
-                    <canvas id="canvasNumberProduct"></canvas>
+            <h1 class="text-center">Thống kê số lượng sách đã bán</h1>
+            <label for="ddlMonth">Nhập tháng:</label>
+            <input id="ddlMonth" name="month" placeholder="Nhập tháng" />
+            <input id="btn-search2" type="submit" value="Tìm" />
+            <div style="display:flex; align-items: stretch;">
+                <div class="w-50">
+                    <table id="statsContainer"></table>
+                </div>
+                <div class="w-50 h-50">
+                    <div id="container" class="h-50 w-75 mb-4 ms-4">
+                        <canvas id="canvasNumberProduct"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
-
+}
+else
+{
+    <div class="text-danger text-center mt-4">Bạn ko có quyền truy cập</div>
+}
 @section scripts{
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -99,7 +104,7 @@
                 data: {
                     labels: lsLabel,
                     datasets: [{
-                        label:"thống kê doanh thu theo thể loại",
+                        label: "thống kê doanh thu theo thể loại",
                         data: lsDataSource,
                         backgroundColor: colors,
                         borderWidth: 1

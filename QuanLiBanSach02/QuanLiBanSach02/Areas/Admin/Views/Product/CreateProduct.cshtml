@@ -5,10 +5,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CreateProduct</h2>
 
 @using (Html.BeginForm())
 {
+    if (Session["UserRole"] as string == "Admin")
+    {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -69,8 +70,12 @@
             </div>
         </div>
     </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    }
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+else
+{
+<div class="text-danger text-center mt-4">Bạn ko có quyền truy cập</div>
+}

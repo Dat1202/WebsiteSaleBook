@@ -73,26 +73,28 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         }
 
         //[HttpPost]
-        public ActionResult Order(string email, string phone)
+        public ActionResult Order()
         {
             List<CartModels> cart = Session["cart"] as List<CartModels>;
             string sMsg = "<html><body><table border= \"1\" ><caption>Thông tin đặt hàng</caption><tr><th>STT</th><th>Tên hàng</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr>";
             int i = 0;
             double tongTien = 0;
+            string email = (string)Session["Email"];
 
             using (TransactionScope scope = new TransactionScope())
             {
+                int userID = (int)Session["UserID"];
                 try
                 {
                     if (!cart.Any())
                     {
-                        TempData["cartIsEmpty"] = "Không có đơn hàng";
+                        TempData["cartIsEmpty"] = "Chưa có đơn hàng";
                     }
                     else
                     {
                         Order order = new Order();
                         order.OrderDate = DateTime.Now;
-
+                        order.UserID = userID;
                         da.Orders.Add(order);
                         da.SaveChanges();
 
@@ -140,7 +142,6 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                 catch (Exception ex)
                 {
                     scope.Dispose();
-                    //ModelState.AddModelError("", "Ban chưa nhập thông tin.");
                     return View("Cart");
                 }
             }

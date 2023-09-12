@@ -6,9 +6,17 @@
     <meta charset="UTF-8">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
+    <style>
+        a {
+        text-decoration: none;
+        }
+        li{
+            list-style-type:none;
+        }
+    </style>
 </head>
 <body style="background:#f7f7f7">
-    <!--Header-->
+    <!--Header-->   
     <div>
         <div class="banner">
                 <img src="~/Content/images/banner.jpg" alt="My Image" style="width: 100%; object-fit: cover;">
@@ -35,10 +43,11 @@
                     <a href="/Cart/Cart"><img src="~/Content/images/logo/icons-cart.png" alt="Cart image" style="width: 100%; object-fit: cover;"></a>
                 </div>
                 <div class="p-3">
-                    @if (Session["UserName"] != null)
+                    @if (Session["UserID"] != null)
                     {
                         <a href="#">Welcome @Session["UserName"]!</a>
                         <a class="mx-2" href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+                        <a class="mx-2" href="@Url.Action("ListOrder", "ListOrder")">Danh sách đơn hàng</a>
                     }
                     else
                     {

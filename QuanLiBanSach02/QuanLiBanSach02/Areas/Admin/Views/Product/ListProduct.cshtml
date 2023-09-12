@@ -4,99 +4,105 @@
     ViewBag.Title = "Quản lí sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@if (Session["UserRole"] as string == "Admin")
+{
+    <h1 class="text__center">Quản lí sản phẩm</h1>
+    <div class="grid__auto">
 
-<h1 class="text__center">Quản lí sản phẩm</h1>
-<div class="grid__auto">
-
-    @if (TempData["SuccAddProductMessage"] != null)
-    {
-        <div class="alert alert-success">@TempData["SuccAddProductMessage"]</div>
-    }
-    @if (TempData["SuccessEditProductMessage"] != null)
-    {
-        <div class="alert alert-success">@TempData["SuccessEditProductMessage"]</div>
-    }
-    @if (TempData["SuccessDeleteProduct"] != null)
-    {
-        <div class="alert alert-success">@TempData["SuccessDeleteProduct"]</div>
-    }
-
-    <div>
-        <a class="my-btn btn btn-info" href="@Url.Action("CreateProduct")">Thêm sản phẩm</a>
-    </div>
-    <hr />
-    <table class="table table-bordered">
-        <tr>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.ProductID)
-                </th>*@
-            <th>
-                <div>Tên sản phẩm</div>
-            </th>
-            <th>
-                <div>Giá sản phẩm</div>
-            </th>
-            <th>
-                <div>Ảnh</div>
-            </th>
-            <th>
-                <div>Chi tiết</div>
-            </th>
-            <th>
-                <div>Thể loại</div>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th class="text__center">Hành động</th>
-        </tr>
-
-        @foreach (var item in Model)
+        @if (TempData["SuccAddProductMessage"] != null)
         {
-
-            <tr>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.ProductID)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td class="flex-center">
-                    <div style="width:150px;">
-                        <img style="width:100%;" src="~/Content/Images/@item.Image" />
-                    </div>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    <div>
-                        <div>
-                            @Html.ActionLink("Sửa", "EditProduct", new { id = item.ProductID }, new { @class = "my-btn btn btn-info", @style = "width:100px" })
-                        </div>
-                        <div>
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.ProductID }, new { @class = "my-btn btn btn-info", @style = "width:100px; margin:5px;" })
-                        </div>
-                        <div>
-                            @using (Html.BeginForm("DeleteProduct", "Product", new { id = item.ProductID }, FormMethod.Post))
-                            {
-                                <input style="width:100px; margin:5px;" type="submit" value="Xóa" class="my-btn btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');" />
-                            }
-                        </div>
-                    </div>
-                </td>
-            </tr>
+            <div class="alert alert-success">@TempData["SuccAddProductMessage"]</div>
+        }
+        @if (TempData["SuccessEditProductMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessEditProductMessage"]</div>
+        }
+        @if (TempData["SuccessDeleteProduct"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessDeleteProduct"]</div>
         }
 
-    </table>
+        <div>
+            <a class="my-btn btn btn-info" href="@Url.Action("CreateProduct")">Thêm sản phẩm</a>
+        </div>
+        <hr />
+        <table class="table table-bordered">
+            <tr>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.ProductID)
+                    </th>*@
+                <th>
+                    <div>Tên sản phẩm</div>
+                </th>
+                <th>
+                    <div>Giá sản phẩm</div>
+                </th>
+                <th>
+                    <div>Ảnh</div>
+                </th>
+                <th>
+                    <div>Chi tiết</div>
+                </th>
+                <th>
+                    <div>Thể loại</div>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th class="text__center">Hành động</th>
+            </tr>
 
-</div>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ProductID)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td class="flex-center">
+                        <div style="width:150px;">
+                            <img style="width:100%;" src="~/Content/Images/@item.Image" />
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        <div>
+                            <div>
+                                @Html.ActionLink("Sửa", "EditProduct", new { id = item.ProductID }, new { @class = "my-btn btn btn-info", @style = "width:100px" })
+                            </div>
+                            <div>
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.ProductID }, new { @class = "my-btn btn btn-info", @style = "width:100px; margin:5px;" })
+                            </div>
+                            <div>
+                                @using (Html.BeginForm("DeleteProduct", "Product", new { id = item.ProductID }, FormMethod.Post))
+                                {
+                                    <input style="width:100px; margin:5px;" type="submit" value="Xóa" class="my-btn btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');" />
+                                }
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+}
+else
+{
+    <div class="text-danger text-center mt-4">Bạn ko có quyền truy cập</div>
+}

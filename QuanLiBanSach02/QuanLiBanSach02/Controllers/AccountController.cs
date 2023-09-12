@@ -32,26 +32,30 @@ namespace QuanLiBanSach02.Controllers
         [HttpPost]
         public ActionResult Login(string Email, string password)
         {
-            //Mã hóa mật khẩu
             password = GetMD5(password);
 
             if (IsValidLogin(Email, password))
             {
                 var data = da.Users.Where(u => u.Email.Equals(Email) && u.Password.Equals(password));
 
-                //add session 
                 Session["UserName"] = data.FirstOrDefault().UserName;
                 Session["Email"] = data.FirstOrDefault().Email;
                 Session["UserID"] = data.FirstOrDefault().UserID;
+                Session["UserRole"] = data.FirstOrDefault().UserRole;
+
                 ViewBag.UserName = Session["UserName"];
 
-
-                // Thực hiện đăng nhập thành công
-                return RedirectToAction("Index", "Home");
+                if (Session["UserRole"] as string == "ADMIN")
+                {
+                    return RedirectToAction("DashBroad", "DashBroad", new { area = "Admin" });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
-                // Thông tin đăng nhập không hợp lệ
                 ModelState.AddModelError("", "Thông tin tài khoản hoặc mật khẩu không chính xác");
                 return View();
             }
@@ -59,7 +63,6 @@ namespace QuanLiBanSach02.Controllers
 
         private bool IsValidLogin(string Email, string password)
         {
-            // Thực hiện truy vấn cơ sở dữ liệu để kiểm tra thông tin đăng nhập
             var user = da.Users.FirstOrDefault(u => u.Email.Equals(Email) && u.Password.Equals(password));
 
             return user != null;
@@ -76,15 +79,28 @@ namespace QuanLiBanSach02.Controllers
         {
             try
             {
+                var data = da.Users.Where(u => u.Email.Equals(user.Email));
+
                 if (user.Email == null || user.UserName == null || user.Password == null || password2 == null)
                 {
                     ModelState.AddModelError("", "Vui lòng điền đầy đủ thông tin");
+                    return View();
+                }
+                else if(user.Password != password2)
+                {
+                    ModelState.AddModelError("", "Mật khẩu ko trùng khớp");
+                    return View();
+                }
+                else if (data.Any())
+                {
+                    ModelState.AddModelError("", "Email đã được sử dụng. Vui lòng chọn một địa chỉ email khác.");
                     return View();
                 }
                 else
                 {
                     if (user.Password == password2)
                     {
+                        user.UserRole = "USER";
                         user.Password = GetMD5(user.Password);
                         User s = user;
                         da.Users.Add(s);
@@ -97,8 +113,6 @@ namespace QuanLiBanSach02.Controllers
                         return View();
                     }
                 }
-
-
             }
             catch
             {
@@ -108,8 +122,7 @@ namespace QuanLiBanSach02.Controllers
 
         public ActionResult Logout()
         {
-            Session.Clear();//Remove session
-
+            Session.Clear();
             return RedirectToAction("Login");
         }
 

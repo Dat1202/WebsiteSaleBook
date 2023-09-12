@@ -8,62 +8,69 @@
 
 @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
-    <h1 class="text__center">Cập nhật sản phẩm</h1>
+    if (Session["UserRole"] as string == "Admin")
+    {
+        @Html.AntiForgeryToken()
+        <h1 class="text__center">Cập nhật sản phẩm</h1>
 
-    <div class="grid__auto">
-        <hr />
-        @if (TempData["ErrorEditProductMessage"] != null)
-        {
-            <div class="alert alert-danger">@TempData["ErrorEditProductMessage"]</div>
-        }
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="flex-center">
-            <div>
-                <div class="form-floating">
-                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
-                    <label>Tên sản phẩm </label>
-                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
-                </div>
+        <div class="grid__auto">
+            <hr />
+            @if (TempData["ErrorEditProductMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorEditProductMessage"]</div>
+            }
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="flex-center">
+                <div>
+                    <div class="form-floating">
+                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                        <label>Tên sản phẩm </label>
+                        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-floating">
-                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                    <label>Giá</label>
-                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-floating">
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        <label>Giá</label>
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-floating">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    <label>Chi tiết sản phẩm </label>
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-floating">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        <label>Chi tiết sản phẩm </label>
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-floating">
-                    @Html.DropDownList("LoaiSP", (SelectList)ViewData["LoaiSP"], "--Chọn thể loại--", new { style = "text-align:center;width: 125px;height: 35px; border-radius: 18px; " })
-                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-floating">
+                        @Html.DropDownList("LoaiSP", (SelectList)ViewData["LoaiSP"], "--Chọn thể loại--", new { style = "text-align:center;width: 125px;height: 35px; border-radius: 18px; " })
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-floating">
-                    @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-                    <label>Tác giả</label>
-                    @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-floating">
+                        @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                        <label>Tác giả</label>
+                        @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-floating">
-                    <input type="file" id="uploadhinh" name="uploadhinh" accept="image/*" />
-                </div>
+                    <div class="form-floating">
+                        <input type="file" id="uploadhinh" name="uploadhinh" accept="image/*" />
+                    </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Cập nhật" class="my-btn btn btn-primary" />
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Cập nhật" class="my-btn btn btn-primary" />
+                        </div>
                     </div>
                 </div>
             </div>
+            <div>
+                <a class="my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
+            </div>
         </div>
-        <div>
-            <a class="my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
-        </div>
-    </div>
+    }
+
+
 }
-
-
+else
+{
+<div class="text-danger text-center mt-4">Bạn ko có quyền truy cập</div>
+}

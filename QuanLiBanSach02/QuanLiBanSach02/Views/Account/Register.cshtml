@@ -12,31 +12,43 @@
         <div class="row mx-auto" style="width:45%">
             <div class="pb-3">
                 <div class="col-12">
-                    <input class="w-100 rounded" style="height:40px" type="text" name="userName" placeholder="UserName" />
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="userName" id="floatingInput" placeholder="UserName">
+                        <label for="floatingInput">UserName</label>
+                    </div>
                 </div>
             </div>
             <div class="pb-3">
                 <div class="col-12">
-                    <input class="w-100 rounded" style="height:40px" type="email" name="email" placeholder="Email" />
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" name="email" id="floatingInput" placeholder="Email">
+                        <label for="floatingInput">Email</label>
+                    </div>
                 </div>
             </div>
             <div class="pb-3">
                 <div class="col-12">
-                    <input class="w-100 rounded" style="height:40px" type="password" name="password" placeholder="Mật khẩu" />
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" name="password" id="floatingInput" placeholder="password">
+                        <label for="floatingInput">Mật khẩu</label>
+                    </div>
                 </div>
             </div>
             <div class="pb-1">
                 <div class="col-12">
-                    <input class="w-100 rounded" style="height:40px" type="password" name="password2" placeholder="Nhập lại mật khẩu" />
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" name="password2" id="floatingInput" placeholder="password">
+                        <label for="floatingInput">Xác nhận mật khẩu</label>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="text-danger text-center">
+            @Html.ValidationSummary()
+        </div>
+
         <div class="row mx-auto" style="width:45%">
-            <div class="col-12">
-                @Html.ValidationSummary()
-            </div>
-            <div class="col-4"></div>
-            <div class="col-5">
+            <div class="col-5 mx-auto">
                 <button type="submit" class="btn btn-success">Đăng ký</button>
             </div>
             <div class="mx-5 my-2">Đã có tài khoản? <a href="/Account/Login">Đăng nhập</a></div>

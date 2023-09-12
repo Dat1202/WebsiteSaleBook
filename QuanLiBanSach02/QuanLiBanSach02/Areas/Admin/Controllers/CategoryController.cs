@@ -99,15 +99,6 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             }
         }
 
-
-
-        // GET: Admin/Category/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        // POST: Admin/Category/Delete/5
         [HttpPost]
         public ActionResult DeleteCategory(int id, Product product)
         {

@@ -9,51 +9,58 @@
         font-size: 16px;
     }
 </style>
-<div>
-    <hr />
-    <div class="grid__auto">
-        <div style="display:flex;">
-            <div>
-                <div style="width: 250px; margin-right: 65px; margin-left: 100px; margin-top:20px;">
-                    <img style="width:100%" src="@Url.Content($"~/Content/Images/{Model.Image}")" alt="Product Image" />
+
+@if (Session["UserRole"] as string == "Admin")
+{
+    <div>
+        <hr />
+        <div class="grid__auto">
+            <div style="display:flex;">
+                <div>
+                    <div style="width: 250px; margin-right: 65px; margin-left: 100px; margin-top:20px;">
+                        <img style="width:100%" src="@Url.Content($"~/Content/Images/{Model.Image}")" alt="Product Image" />
+                    </div>
+                </div>
+                <div>
+                    <h2>Tên sản phẩm</h2>
+                    <p>
+                        @Html.DisplayFor(model => model.ProductName)
+                    </p>
+
+                    <h2>Giá sản phẩm</h2>
+                    <p>
+                        @Html.DisplayFor(model => model.Price)
+                    </p>
+
+                    <h2>Chi tiết</h2>
+
+                    <p>
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+
+                    <h2>Thể loại</h2>
+
+                    <p>
+                        @Html.DisplayFor(model => model.Category.CategoryName)
+                    </p>
+
+                    <h2>Tác giả</h2>
+
+                    <p>
+                        @Html.DisplayFor(model => model.Author)
+                    </p>
                 </div>
             </div>
-            <div>
-                <h2>Tên sản phẩm</h2>
-                <p>
-                    @Html.DisplayFor(model => model.ProductName)
-                </p>
+            <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">Thêm sản phẩm</a>
 
-                <h2>Giá sản phẩm</h2>
-                <p>
-                    @Html.DisplayFor(model => model.Price)
-                </p>
-
-                <h2>Chi tiết</h2>
-
-                <p>
-                    @Html.DisplayFor(model => model.Description)
-                </p>
-
-                <h2>Thể loại</h2>
-
-                <p>
-                    @Html.DisplayFor(model => model.Category.CategoryName)
-                </p>
-
-                <h2>Tác giả</h2>
-
-                <p>
-                    @Html.DisplayFor(model => model.Author)
-                </p>
-            </div>
+            <p>
+                <a class="my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
+                @Html.ActionLink("Sửa", "EditProduct", new { id = Model.ProductID }, new { @class = " my-btn btn btn-warning" })
+            </p>
         </div>
-        <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">Thêm sản phẩm</a>
-
-        <p>
-            <a class="my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
-            @Html.ActionLink("Sửa", "EditProduct", new { id = Model.ProductID }, new { @class = " my-btn btn btn-warning" })
-        </p>
     </div>
-</div>
-
+}
+else
+{
+    <div class="text-danger text-center mt-4">Bạn ko có quyền truy cập</div>
+}
