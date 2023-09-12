@@ -45,7 +45,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             }
             Session["cart"] = cart;
 
-            return RedirectToAction("Details", "Product", new { id = id });
+            return RedirectToAction("Detail", "Book", new { id = id });
         }
 
         public RedirectToRouteResult UpdateCart(int id, int txtSoLuong)

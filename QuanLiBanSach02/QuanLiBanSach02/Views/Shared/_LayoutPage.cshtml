@@ -11,13 +11,15 @@
     <!--Header-->
     <div>
         <div class="banner">
-            <img src="~/Content/images/banner.jpg" alt="My Image" style="width: 100%; object-fit: cover;">
+                <img src="~/Content/images/banner.jpg" alt="My Image" style="width: 100%; object-fit: cover;">
         </div>
 
         <div>
             <div class="d-flex flex-row justify-content-around flex-wrap">
                 <div class="p-3">
-                    <img src="~/Content/images/logo/logo-new.png" alt="Logo" />
+                    <a href="/">
+                        <img src="~/Content/images/logo/logo-new.png" alt="Logo" />
+                    </a>
                 </div>
                 <div class="p-3">
                     <form class="d-flex flex-row align-items-center flex-wrap mx-5 bg-white" style="border-radius:7px" action="/home/search">
@@ -30,7 +32,7 @@
                     </form>
                 </div>
                 <div class="icon-cart p-3">
-                    <a href="#"><img src="~/Content/images/logo/icons-cart.png" alt="Cart image" style="width: 100%; object-fit: cover;"></a>
+                    <a href="/Cart/Cart"><img src="~/Content/images/logo/icons-cart.png" alt="Cart image" style="width: 100%; object-fit: cover;"></a>
                 </div>
                 <div class="p-3">
                     @if (Session["UserName"] != null)

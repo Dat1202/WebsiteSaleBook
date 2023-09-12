@@ -1,59 +1,69 @@
 ﻿@model QuanLiBanSach02.Models.Product
 
 @{
-    ViewBag.Title = "Chi tiết sản phẩm";
+    ViewBag.Title = "Cập nhật sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<style>
-    p {
-        font-size: 16px;
-    }
-</style>
-<div>
-    <hr />
+
+
+@using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h1 class="text__center">Cập nhật sản phẩm</h1>
+
     <div class="grid__auto">
-        <div style="display:flex;">
+        <hr />
+        @if (TempData["ErrorEditProductMessage"] != null)
+        {
+            <div class="alert alert-danger">@TempData["ErrorEditProductMessage"]</div>
+        }
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="flex-center">
             <div>
-                <div style="width: 250px; margin-right: 65px; margin-left: 100px; margin-top:20px;">
-                    <img style="width:100%" src="@Url.Content($"~/Content/Images/{Model.Image}")" alt="Product Image" />
+                <div class="form-floating">
+                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>Tên sản phẩm </label>
+                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-floating">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>Giá</label>
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-floating">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>Chi tiết sản phẩm </label>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-floating">
+                    @Html.DropDownList("LoaiSP", (SelectList)ViewData["LoaiSP"], "--Chọn thể loại--", new { style = "text-align:center;width: 125px;height: 35px; border-radius: 18px; " })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-floating">
+                    @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>Tác giả</label>
+                    @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-floating">
+                    <input type="file" id="uploadhinh" name="uploadhinh" accept="image/*" />
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Cập nhật" class="my-btn btn btn-primary" />
+                    </div>
                 </div>
             </div>
-            <div>
-                <h2>Tên sản phẩm</h2>
-                <p>
-                    @Html.DisplayFor(model => model.ProductName)
-                </p>
-
-                <h2>Giá sản phẩm</h2>
-                <p>
-                    @Html.DisplayFor(model => model.Price)
-                </p>
-
-                <h2>Chi tiết</h2>
-
-                <p>
-                    @Html.DisplayFor(model => model.Description)
-                </p>
-
-                <h2>Thể loại</h2>
-
-                <p>
-                    @Html.DisplayFor(model => model.Category.CategoryName)
-                </p>
-
-                <h2>Tác giả</h2>
-
-                <p>
-                    @Html.DisplayFor(model => model.Author)
-                </p>
-            </div>
         </div>
-        <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">Thêm sản phẩm</a>
-
-        <p>
+        <div>
             <a class="my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
-            @Html.ActionLink("Sửa", "EditProduct", new { id = Model.ProductID }, new { @class = " my-btn btn btn-warning" })
-        </p>
+        </div>
     </div>
-</div>
+}
+
 
