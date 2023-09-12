@@ -1,0 +1,30 @@
+﻿@model List<QuanLiBanSach02.Models.Product>
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!--List products-->
+<div class="container">
+    <ul class="row g-3" style="list-style-type:none">
+        @foreach (var item in Model)
+        {
+            <li class="col-3">
+                <div class="bg-white d-flex justify-content-around flex-wrap">
+                    <div>
+                        <img src="~/Content/Images/@item.Image" alt="@item.Image" style="width:200px; height:230px" />
+                    </div>
+                    <div>
+                        <h3>@Html.DisplayFor(modelItem => item.ProductName)</h3>
+                        <h1 style="color:red">@Html.DisplayFor(modelItem => item.Price)</h1>
+                        <a class="btn btn-primary" style="margin-bottom:5px" href="@Url.Action("Detail", "Book", new { id = item.ProductID})">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+

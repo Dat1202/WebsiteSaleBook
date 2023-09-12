@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --main-color: #ffa500;
     --primary-color: #ffb733;
     --white-color: #ffffff;
@@ -15,14 +15,11 @@ a {
 }
 
 html {
-    font-size: 70%;
+    font-size: 62.5%;
     line-height: 1.6rem;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
-}
 
-.auto{
-    margin:0 auto;
 }
 
 .grid__auto {

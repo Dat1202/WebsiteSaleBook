@@ -16,8 +16,7 @@ namespace QuanLiBanSach02
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces:new[] { "QuanLiBanSach02.Controllers" } 
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

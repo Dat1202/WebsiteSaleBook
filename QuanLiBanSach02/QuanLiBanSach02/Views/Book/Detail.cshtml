@@ -1,0 +1,58 @@
+﻿@model QuanLiBanSach02.Models.Product
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <hr />
+        <div class="grid__auto">
+            <div style="display:flex;">
+                <div>
+                    <div style="width: 250px; margin-right: 65px; margin-left: 100px; margin-top:20px;">
+                        <img style="width:100%" src="@Url.Content($"~/Content/Images/{Model.Image}")" alt="Product Image" />
+                    </div>
+                </div>
+                <div>
+                    <h2>Tên sản phẩm</h2>
+                    <p>
+                        @Html.DisplayFor(model => model.ProductName)
+                    </p>
+
+                    <h2>Giá sản phẩm</h2>
+                    <p>
+                        @Html.DisplayFor(model => model.Price)
+                    </p>
+
+                    <h2>Chi tiết</h2>
+
+                    <p>
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+
+                    <h2>Thể loại</h2>
+
+                    <p>
+                        @Html.DisplayFor(model => model.Category.CategoryName)
+                    </p>
+
+                    <h2>Tác giả</h2>
+
+                    <p>
+                        @Html.DisplayFor(model => model.Author)
+                    </p>
+                </div>
+
+                <div style="margin: 5%">
+                    <a class="btn btn-success btn-sm" href="@Url.Action("Thêm vào giỏ", "AddCart", new { id = Model.ProductID })">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

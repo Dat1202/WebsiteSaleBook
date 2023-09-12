@@ -1,31 +1,58 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<QuanLiBanSach02.Models.Product>
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<style>
+    .paging-container a {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 2px;
+        border: 1px solid #ddd;
+        color: #333;
+        text-decoration: none;
+    }
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    .paging-container .active {
+        background-color: #333;
+        color: white;
+    }
+</style>
+
+<!--List products-->
+<div class="container">
+    @if (Model != null && Model.Any())
+    {
+        <ul class="row g-3" style="list-style-type:none">
+            @foreach (var item in Model)
+            {
+                <li class="col-3">
+                    <div class="bg-white d-flex justify-content-around flex-wrap">
+                        <div>
+                            <img src="~/Content/Images/@item.Image" alt="@item.Image" style="width:200px; height:230px" />
+                        </div>
+                        <div>
+                            <h3>@Html.DisplayFor(modelItem => item.ProductName)</h3>
+                            <h1 style="color:red">@Html.DisplayFor(modelItem => item.Price)</h1>
+                            <a class="btn btn-primary" style="margin-bottom:5px" href="@Url.Action("Detail", "Book", new { id = item.ProductID })">
+                                Xem chi tiết
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+    <div class="d-flex flex-row justify-content-around flex-wrap">
+        <div class="paging-container">
+            <br />
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
     </div>
 </div>
