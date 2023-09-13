@@ -48,13 +48,12 @@ else
 {
     <div class="text-danger text-center mt-4">Bạn ko có quyền truy cập</div>
 }
-@section scripts{
 
+@section scripts{
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-
         $(document).ready(function () {
             $.get('/Admin/Stats/StatsByYear', function (res) {
                 ChartProductCategoryByYear(res);
@@ -76,6 +75,8 @@ else
 
             $.get('/Admin/Stats/StatsByYear?year=' + year, function (res) {
                 ChartProductCategoryByYear(res);
+                DisplayStatsYear(res);
+
             });
         });
 
@@ -147,7 +148,7 @@ else
             }
             $.get('/Admin/Stats/StatsNumberProductByMonth?month=' + month, function (res) {
                 ChartNumberProduct(res);
-                DisplayStats(res);
+                DisplayStatsMonth(res);
             });
         });
 

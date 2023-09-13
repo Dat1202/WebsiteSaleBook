@@ -1,0 +1,137 @@
+﻿@model List<QuanLiBanSach02.Models.CategoryProductCountModels>
+
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dashboard {
+        display: inline-block;
+        padding: 70px;
+        font-size: 20px;
+        box-shadow: 0 1px 3.125rem 0 rgba(0, 0, 0, 0.2);
+        border-left: 5px solid #454592;
+        background-color: white;
+    }
+</style>
+<div>
+    <div class="m-3 ms-5 dashboard">
+        Số sản phẩm của cửa hàng: @ViewBag.ProductCount
+    </div>
+
+    <div class="m-3 dashboard" style="border-left: 5px solid red;">
+        Số thể loại của cửa hàng: @ViewBag.CateCount
+    </div>
+
+    <div class="d-flex" style="justify-content: space-evenly;">
+        <div>
+            <div style="height: 510px; width: 450px; background-color: white; box-shadow: 0 1px 3.125rem 0 rgba(0, 0, 0, 0.2); ">
+                <h4 class="text-center pt-2">Số lượng sản phẩm theo thể loại</h4>
+                <canvas style="height: 445px; width: 405px;padding: 50px;" id="chartPie"></canvas>
+            </div>
+        </div>
+
+        <div>
+            <div style="height: 510px; width: 650px; background-color: white; box-shadow: 0 1px 3.125rem 0 rgba(0, 0, 0, 0.2);">
+                <h4 class="text-center pt-2">Doanh thu theo tháng của cửa hàng</h4>
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        let categoryNames = [];
+        let productCounts = [];
+        let colors = [];
+
+        @foreach (var categoryCount in Model)
+        {
+            var categoryName = HttpUtility.HtmlDecode(categoryCount.CategoryName);
+
+            @:categoryNames.push("@categoryCount.CategoryName");
+            @:productCounts.push(@categoryCount.ProductCount);
+        }
+
+        for (let i = 0; i < categoryNames.length; i++) {
+            let r = Math.random() * 255;
+            let g = Math.random() * 255;
+            let b = Math.random() * 255;
+            colors.push(`rgb(${r}, ${g}, ${b}, 0.5)`);
+        }
+
+        let chartPieCateProd = () => {
+            let ctx = document.getElementById('chartPie').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: categoryNames,
+                    datasets: [{
+                        label: 'Product Count',
+                        data: productCounts,
+                        backgroundColor: colors,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+        }
+        function ChartStatsByMonth(lsDataCategoryByYear) {
+            let lsLabel = [];
+            let lsDataSource = [];
+
+            $.each(lsDataCategoryByYear, function (index, item) {
+                lsLabel.push(item.thang);
+                lsDataSource.push(item.TongTien);
+            });
+
+            let ctx1 = document.getElementById('lineChart').getContext('2d');
+
+            let colors = [];
+
+            for (let i = 0; i < lsLabel.length; i++) {
+                let r = Math.random() * 255;
+                let g = Math.random() * 255;
+                let b = Math.random() * 255;
+                colors.push(`rgb(${r},${g},${b},0.5)`);
+            }
+            const chartProduct = new Chart(ctx1, {
+                type: "line",
+                data: {
+                    labels: lsLabel,
+                    datasets: [{
+                        label: '',
+                        data: lsDataSource,
+                        backgroundColor: colors,
+                        borderWidth: 1,
+                        fill: false,
+                        tension: 0.5
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            stacked: true
+                        }
+                    }
+                }
+            });
+
+        }
+
+        window.onload = () => {
+            $.get('/Admin/DashBoard/StatsByMonth', function (res) {
+                ChartStatsByMonth(res);
+            });
+            console.log(categoryNames)
+
+            chartPieCateProd();
+        }
+    </script>
+}

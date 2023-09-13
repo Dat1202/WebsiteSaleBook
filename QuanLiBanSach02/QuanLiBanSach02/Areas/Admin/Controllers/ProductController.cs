@@ -29,7 +29,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         // GET: Admin/Product/Create
         public ActionResult CreateProduct()
         {
-            ViewData["LoaiSP"] = new SelectList(da.Categories, "CategoryID", "CategoryName");
+            ViewData["LoaiSP"] = new SelectList(da.Categories, "CategoryID", "CategoryName"); ;
+
             return View();
         }
 

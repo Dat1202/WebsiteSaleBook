@@ -45,9 +45,9 @@ namespace QuanLiBanSach02.Controllers
 
                 ViewBag.UserName = Session["UserName"];
 
-                if (Session["UserRole"] as string == "ADMIN")
+                if (Session["UserRole"] as string == "Admin")
                 {
-                    return RedirectToAction("DashBroad", "DashBroad", new { area = "Admin" });
+                    return RedirectToAction("DashBoard", "DashBoard", new { area = "Admin" });
                 }
                 else
                 {

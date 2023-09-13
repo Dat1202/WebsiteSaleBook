@@ -19,14 +19,14 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 
         public ActionResult StatsByYear(int? year)
         {
-            var lsDataCategoryByYear = da.spThongKeDoanhThuTheoNam(year);
+            var lsDataCategoryByYear = da.spThongKeDoanhThuTheLoaiTheoNam(year);
 
             return Json(lsDataCategoryByYear, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult StatsNumberProductByMonth(int? month)
         {
-            var lsDataNumberProduct = da.spThongKeSoLuongSanPhamDaBanTheoThang(month);
+            var lsDataNumberProduct = da.spThongKeSoLuongSanPhamTheoThang(month);
 
             return Json(lsDataNumberProduct, JsonRequestBehavior.AllowGet);
         }

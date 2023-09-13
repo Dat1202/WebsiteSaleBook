@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5b0521ace57142aaa8775f8d638376d2" Name="Diagram1">
+      <Diagram DiagramId="a9ba9a132bbf48ac8f748f6e104b4b44" Name="Diagram1">
         <EntityTypeShape EntityType="BookStoreModel.Category" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.OrderDetail" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Order" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Order" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.User" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="BookStoreModel.FK__Product__Categor__1332DBDC" ManuallyRouted="false" />
-        <AssociationConnector Association="BookStoreModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="BookStoreModel.FK_OrderDetails_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="BookStoreModel.FK_Orders_User" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK__Product__Categor__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK__OrderDeta__Order__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK__OrderDeta__Produ__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK__Orders__UserID__5165187F" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

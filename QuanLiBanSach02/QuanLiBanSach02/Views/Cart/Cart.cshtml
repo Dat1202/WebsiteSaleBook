@@ -1,4 +1,4 @@
-﻿@model List<QuanLiBanSach02.Models.CartModels>
+﻿@*@model List<QuanLiBanSach02.Models.CartModels>
 
 @{
     ViewBag.Title = "Giỏ hàng";
@@ -82,4 +82,98 @@
 else
 {
     <div class="mx-5 my-2 text-center">Bạn chưa đăng nhập!<a href="/Account/Login"> Đăng nhập</a></div>
+}*@
+
+@model List<QuanLiBanSach02.Models.CartModels>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@Html.ValidationMessage("", "", new { @class = "text-danger" })
+
+@if (Model == null)
+{
+    <h2 class="text-info text-center">Chưa có sản phẩm</h2>
+}
+else
+{
+    <div class="container">
+        <div class="content grid__auto">
+            @if (TempData["cartIsEmpty"] != null)
+            {
+                <div class="alert alert-warning">@TempData["cartIsEmpty"]</div>
+            }
+
+            <div class="inner">
+                <table id="tblCart" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã hàng</th>
+                            <th>Tên hàng</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td></td>
+                                <td class="getPrice">
+                                    <a class="text-decoration-none hover-a" target="_blank" href="@Url.Action("Detail", "Book", new { id=item.ProductID })">@item.ProductName</a>
+                                </td>
+                                <td>
+                                    <form action="@Url.Action("UpdateCart")" method="get">
+                                        <input type="hidden" name="id" value="@item.ProductID" />
+                                        <input type="number" name="txtSoLuong" min="1" value="@item.Quantity" />
+                                        <button type="submit" class="btn btn-success btn-sm">Cập nhật</button>
+                                    </form>
+                                </td>
+                                <td class="getPrice">@item.Price VNĐ</td>
+                                <td class="getPrice">@item.Total VNĐ</td>
+                                <td>
+                                    <a href="@Url.Action("DeleteCartItem", "Cart", new { id=item.ProductID })" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>Tổng số lượng: @Model.Sum(m => m.Quantity)</td>
+                            <td></td>
+                            <td class="d-flex">
+                                <p>Tổng: </p>
+                                <p class="text-success">@Model.Sum(m => m.Total) VNĐ</p>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="">
+                    <form action="@Url.Action("Order", "Cart")" method="post">
+                        <hr>
+                        <div class="d-flex" style="margin-left:60%">
+                            <h6 style="margin: 10px 20px;">Thanh Toán:</h6>
+                            <button type="submit" class="border-cus-1">
+                                <img src="~/Content/images/logo/money-32.png" alt="icon" width="30" />
+                                Đặt hàng
+                            </button>
+                            <h6 style="margin: 10px 20px;">hoặc</h6>
+                            <a href="/Cart/PaymentWithPayPal" class="border-cus-1" id="a-cus1">
+                                <img src="~/Content/images/logo/paypal-48.png" alt="icon" width="30" />
+                                Paypal
+                            </a>
+                        </div>
+
+                        @*<a class="btn btn-success btn-sm" href="@Url.Action("ListProduct", "Product")">
+                                Tiếp tục mua hàng
+                            </a>*@
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 }

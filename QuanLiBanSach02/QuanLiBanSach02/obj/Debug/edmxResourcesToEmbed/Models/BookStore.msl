@@ -26,6 +26,7 @@
           <ScalarProperty Name="OrderID" ColumnName="OrderID" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -66,27 +67,51 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="spThongKeDoanhThuTheoNam" FunctionName="BookStoreModel.Store.spThongKeDoanhThuTheoNam">
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="BookStoreModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="BookStoreModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="BookStoreModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="BookStoreModel.Store.sp_helpdiagramdefinition">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="BookStoreModel.spThongKeDoanhThuTheoNam_Result">
+        <ComplexTypeMapping TypeName="BookStoreModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="BookStoreModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookStoreModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="BookStoreModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="BookStoreModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="spThongKeDoanhThuTheLoaiTheoNam" FunctionName="BookStoreModel.Store.spThongKeDoanhThuTheLoaiTheoNam">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookStoreModel.spThongKeDoanhThuTheLoaiTheoNam_Result">
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
           <ScalarProperty Name="TongTien" ColumnName="TongTien" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="spThongKeDoanhThuTheoThang" FunctionName="BookStoreModel.Store.spThongKeDoanhThuTheoThang">
+    <FunctionImportMapping FunctionImportName="spThongKeSoLuongSanPhamTheoThang" FunctionName="BookStoreModel.Store.spThongKeSoLuongSanPhamTheoThang">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="BookStoreModel.spThongKeDoanhThuTheoThang_Result">
+        <ComplexTypeMapping TypeName="BookStoreModel.spThongKeSoLuongSanPhamTheoThang_Result">
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />
           <ScalarProperty Name="soLuong" ColumnName="soLuong" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="spThongKeSoLuongSanPhamDaBanTheoThang" FunctionName="BookStoreModel.Store.spThongKeSoLuongSanPhamDaBanTheoThang">
+    <FunctionImportMapping FunctionImportName="ThongKeDoanhThuTheoThang" FunctionName="BookStoreModel.Store.ThongKeDoanhThuTheoThang">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="BookStoreModel.spThongKeSoLuongSanPhamDaBanTheoThang_Result">
-          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-          <ScalarProperty Name="soLuong" ColumnName="soLuong" />
+        <ComplexTypeMapping TypeName="BookStoreModel.ThongKeDoanhThuTheoThang_Result">
+          <ScalarProperty Name="thang" ColumnName="thang" />
+          <ScalarProperty Name="TongTien" ColumnName="TongTien" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

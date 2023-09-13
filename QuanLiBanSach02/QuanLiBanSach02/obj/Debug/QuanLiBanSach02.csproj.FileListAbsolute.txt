@@ -106,3 +106,7 @@ D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Mvc.xml
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.csprojResolveAssemblyReference.cache
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.dll
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.pdb
+D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Newtonsoft.Json.dll
+D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\PayPal.dll
+D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Newtonsoft.Json.xml
+D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\PayPal.xml
