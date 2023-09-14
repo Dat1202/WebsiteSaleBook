@@ -29,16 +29,20 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         // GET: Admin/Product/Create
         public ActionResult CreateProduct()
         {
-            ViewData["LoaiSP"] = new SelectList(da.Categories, "CategoryID", "CategoryName"); ;
+            //ViewData["LoaiSP"] = new SelectList(da.Categories, "CategoryID", "CategoryName");
+            var listCate = da.Categories.ToList();
+            ViewBag.LoaiSP = new SelectList(listCate, "CategoryID", "CategoryName");
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateProduct(Product product, HttpPostedFileBase uploadhinh, FormCollection collection)
+        public ActionResult CreateProduct(FormCollection collection, Product product, HttpPostedFileBase uploadhinh)
         {
             try
             {
+                var listCate = da.Categories.ToList();
+                ViewBag.LoaiSP = new SelectList(listCate, "CategoryID", "CategoryName");
                 bool productExists = da.Products.Any(s => s.ProductName == product.ProductName);
                 if (productExists)
                 {
@@ -47,7 +51,6 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                 else
                 {
                     Product p = new Product();
-
                     p = product;
                     p.CategoryID = int.Parse(collection["LoaiSP"]);
 

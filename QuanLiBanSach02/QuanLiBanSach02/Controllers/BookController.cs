@@ -14,8 +14,10 @@ namespace QuanLiBanSach02.Controllers
         // GET: BooK
         public ActionResult Detail(int id)
         {
-            Product p = da.Products.Where(s => s.ProductID == id).FirstOrDefault();
-            return View(p);
+            Product pro = da.Products.Where(s => s.ProductID == id).FirstOrDefault();
+            ViewBag.Products = da.Products.Where(p => p.CategoryID == pro.CategoryID).ToList();
+
+            return View(pro);
         }
     }
 }

@@ -1,58 +1,77 @@
 ﻿@model QuanLiBanSach02.Models.Product
+@using System.Globalization
 
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div>
-        <hr />
-        <div class="grid__auto">
-            <div style="display:flex;">
-                <div>
-                    <div style="width: 250px; margin-right: 65px; margin-left: 100px; margin-top:20px;">
-                        <img style="width:100%" src="@Url.Content($"~/Content/Images/{Model.Image}")" alt="Product Image" />
+
+    <hr />
+    <div style="margin: 0 13rem;">
+        <div style="background-color:white">
+            <div class="grid__auto">
+                <div style="display:flex;">
+                    <div>
+                        <div style="margin: 15px 50px 15px 15px;">
+                            <img style="width:18rem; height:26rem" src="@Url.Content($"~/Content/Images/{Model.Image}")" alt="Product Image" />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h2>Tên sản phẩm</h2>
-                    <p>
-                        @Html.DisplayFor(model => model.ProductName)
-                    </p>
+                    <div>
+                        <h3 style="margin-top:5px">@Html.DisplayFor(model => model.ProductName)</h3>
 
-                    <h2>Giá sản phẩm</h2>
-                    <p>
-                        @Html.DisplayFor(model => model.Price)
-                    </p>
+                        <p><span style="color:red;">@Html.DisplayFor(model => model.Author)</span> (tác giả)</p>
 
-                    <h2>Chi tiết</h2>
+                        <h3 style="color:red;">@Html.DisplayFor(model => model.Price) VND</h3>
 
-                    <p>
-                        @Html.DisplayFor(model => model.Description)
-                    </p>
+                        <p>Tình trạng: <span style="color:red;">Còn hàng</span></p>
 
-                    <h2>Thể loại</h2>
+                        <p> tags: @Html.DisplayFor(model => model.Category.CategoryName)</p>
 
-                    <p>
-                        @Html.DisplayFor(model => model.Category.CategoryName)
-                    </p>
+                        <p>@Html.DisplayFor(model => model.Description)</p>
 
-                    <h2>Tác giả</h2>
+                        <div class="border-cus-2">
+                            <a class="a-cus-2" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">Thêm vào giỏ</a>
+                        </div>
 
-                    <p>
-                        @Html.DisplayFor(model => model.Author)
-                    </p>
-                </div>
+                        <div>
+                            <p>Gọi đặt hàng: <span style="color:red; font-weight: bold;">(028) 6666 9999</span> hoặc <span style="color:red; font-weight: bold;"> 0933 109 009</span></p>
+                            <h6>Thông tin & Khuyến mãi</h6>
+                            <p>Đổi trả hàng trong vòng 7 ngày <br />Sử dụng mỗi <span style="color:red; font-weight: bold;">3.000 BBxu</span> để được giảm 10.000đ.</p>
+                        </div>
 
-                <div style="margin: 5%">
-                    <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">
-                        <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="container" style="background-color:white; margin-top:20px; padding-bottom:5px">
+            <h5 style="color:orange">Sản phẩm cùng loại</h5>
+            <hr />
+            <ul class="row g-3" style="list-style-type:none; margin-left:-35px">
+                @foreach (var item in ViewBag.Products)
+                {
+                    <li class="col-3">
+                        <a class="text-decoration-none" href="@Url.Action("Detail", "Book", new { id = item.ProductID })">
+                            <div class="d-flex justify-content-around flex-wrap" style="background-color:gainsboro">
+                                <div style="margin:10px">
+                                    <img src="~/Content/Images/@item.Image" alt="@item.Image" style="width:200px; height:180px" />
+                                </div>
+                                <div class="text-center">
+                                    <h5>@item.ProductName</h5>
+                                    <p>@item.Author</p>
+                                    <h5 style="color:red">@item.Price</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+
+
+        </div>
     </div>
 }
-

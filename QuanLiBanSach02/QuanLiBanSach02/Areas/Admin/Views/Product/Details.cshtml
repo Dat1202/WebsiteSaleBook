@@ -51,11 +51,9 @@
                     </p>
                 </div>
             </div>
-            <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })">Thêm sản phẩm</a>
 
             <p>
-                <a class="my-btn btn btn-secondary" href="@Url.Action("ListProduct", "Product")">Trang chủ</a>
-                @Html.ActionLink("Sửa", "EditProduct", new { id = Model.ProductID }, new { @class = " my-btn btn btn-warning" })
+                @Html.ActionLink("Cập nhật", "EditProduct", new { id = Model.ProductID }, new { @class = " my-btn btn btn-warning" })
             </p>
         </div>
     </div>

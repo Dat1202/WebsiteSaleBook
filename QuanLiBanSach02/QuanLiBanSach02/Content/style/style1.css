@@ -1,0 +1,136 @@
+﻿/*:root {
+    --main-color: #8ed9ff;
+    --primary-color: #85c7e8;
+    --white-color: #ffffff;
+    --border-color: #A9A9A9;
+    --text-color: #000000;
+}*/
+.bg-col {
+    background-color:#f0f0f2;
+}
+.paging-container a{
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 2px;
+        border: 1px solid #ddd;
+        color: #333;
+        text-decoration: none;
+}
+ .paging-container .active {
+        background-color: #333;
+        color: white;
+}
+
+.category {
+    background-color: white;
+    border-radius: 10px;
+}
+.category_heading {
+    font-size: 1.8rem;
+    padding: 8px 18px;
+    margin: 0px;
+    border-bottom: 1px solid #A9A9A9;
+}
+.category-list {
+    padding: 0 0 9px 0;
+}
+
+.category-items {
+    list-style-type: none;
+}
+
+.category-items-text {
+    font-size: 1.4rem;
+    position: relative;
+    display: block;
+    padding: 4px 30px;
+    right: 0;
+    transition: right linear 0.2s;
+    text-decoration: none;
+}
+
+.category-items a:link,
+:visited,
+:active {
+    color: #000000;
+}
+
+.category-items a:hover {
+    color: #85c7e8;
+    right: -6px;
+}
+
+.bo_gach_chan {
+   text-decoration: none;
+}
+
+.custom-border {
+    background-color: #f0dbdb;
+    border-radius: 5px;
+    padding: 3px 0 10px 0;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.hover-a:hover {
+    color:red;
+}
+
+.margin-cus-1 {
+    margin: 30px 5% 0 15%;
+}
+
+.border-cus-1 {
+    border-style: groove; 
+    background-color:aqua;  
+    border-radius: 10px;
+}
+
+.border-cus-1:hover{
+    background-color:blueviolet;
+}
+
+.border-cus-2 {
+    border-style: groove; 
+    width: 13rem; 
+    height: 3rem; 
+    background-color:darkgoldenrod; 
+    border-radius: 7px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    margin-bottom:15px;
+}
+
+.border-cus-2:hover {
+    background-color: orange;
+}
+
+#a-cus1{
+    padding: 5px 5px;
+    text-decoration: none;
+}
+
+.a-cus-2{
+    font-weight: bold; 
+    color:white; 
+    text-decoration:none;
+}
+
+.left {
+  display: inline-block;
+  position: relative;
+  left: 0;
+}
+
+.header_cus {
+    height: 140px; 
+    top: 0; 
+    position: sticky; 
+    z-index: 10; 
+    background:#f7f7f7
+}

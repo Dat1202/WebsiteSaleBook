@@ -7,46 +7,122 @@
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-<style>
-    .paging-container a {
-        display: inline-block;
-        padding: 5px 10px;
-        margin: 0 2px;
-        border: 1px solid #ddd;
-        color: #333;
-        text-decoration: none;
-    }
-
-    .paging-container .active {
-        background-color: #333;
-        color: white;
-    }
-</style>
-
 <!--List products-->
+<div>
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1500">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselExample" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselExample" data-bs-slide-to="2"></li>
+            <li data-bs-target="#carouselExample" data-bs-slide-to="3"></li>
+            <!-- Add more indicators if needed -->
+        </ol>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://bookbuy.vn/Res/Images/Album/42c179ce-4813-4ca7-bebe-3fbf89f58a88.jpg?w=880&scale=both&h=320&mode=crop" class="d-block" style="height:300px; width:100%" alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="https://bookbuy.vn/Res/Images/Album/ff781df1-ae1d-4a17-a48a-6c547c3a58f2.jpg?w=880&scale=both&h=320&mode=crop" class="d-block" style="height:300px; width:100%" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="https://bookbuy.vn/Res/Images/Album/db09acb6-fdf9-4a28-a415-ee4af97fa9b1.jpg?w=880&scale=both&h=320&mode=crop" class="d-block " style="height:300px; width:100%" alt="Slide 3">
+            </div>
+            <div class="carousel-item">
+                <img src="https://bookbuy.vn/Res/Images/Album/3f71529e-1f2b-4a9c-9f96-04dd14999d4e.jpg?w=880&scale=both&h=320&mode=crop" class="d-block " style="height:300px; width:100%" alt="Slide 3">
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </a>
+    </div>
+</div>
 <div class="container">
-    @if (Model != null && Model.Any())
-    {
-        <ul class="row g-3" style="list-style-type:none">
-            @foreach (var item in Model)
+    <div class="bg-col">
+        <div class="d-flex p-2">
+            <div style="width:20%; margin-left:5px">
+                <nav class="category">
+                    <h3 class="category_heading">
+                        <FontAwesomeIcon icon={faListUl} style={{ marginRight: "5px" }} />
+                        Danh mục
+                    </h3>
+                    <ul class="category-list">
+                        <li class="category-items">
+                            <a class="category-items-text" href="/">Tất Cả</a>
+                        </li>
+                        @foreach (var c in ViewBag.Category)
+                        {
+                            <li class="category-items">
+                                <a class="category-items-text" href="@Url.Action("Index", new {categoryId = c.CategoryID })">@c.CategoryName</a>
+                                @*<link href="@Url.Action("Index", "Home", new { categoryId = c.CategoryID })" rel="stylesheet" type="text/css">@c.CategoryName</link>*@
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+
+            @if (Model != null && Model.Any())
             {
-                <li class="col-3">
-                    <div class="bg-white d-flex justify-content-around flex-wrap">
+                <div style="width:80%; margin-left:-10px">
+                    <form class="custom-border d-flex justify-content-around" style="margin: 0 0 5px 30px;" action="/home/index">
                         <div>
-                            <img src="~/Content/Images/@item.Image" alt="@item.Image" style="width:200px; height:230px" />
+                            <label for="fromPrice">Giá từ:</label>
+                            <input type="number" name="fromPrice" id="fromPrice" />
+
+                            <label for="toPrice">đến:</label>
+                            <input type="number" name="toPrice" id="toPrice" />
+
+                            <button type="submit" class="btn btn-success">Tìm Kiếm</button>
                         </div>
+
                         <div>
-                            <h3>@Html.DisplayFor(modelItem => item.ProductName)</h3>
-                            <h1 style="color:red">@Html.DisplayFor(modelItem => item.Price)</h1>
-                            <a class="btn btn-primary" style="margin-bottom:5px" href="@Url.Action("Detail", "Book", new { id = item.ProductID })">
-                                Xem chi tiết
-                            </a>
+                            <label for="sortOrder">Sắp xếp:</label>
+                            <select name="sortOrder" id="sortOrder">
+                                <option value="">Mặc định</option>
+                                <option value="price_asc" @(ViewBag.CurrentSort == "price_asc" ? "selected" : "")>Giá tăng dần</option>
+                                <option value="price_desc" @(ViewBag.CurrentSort == "price_desc" ? "selected" : "")>Giá giảm dần</option>
+                            </select>
+
+                            <button type="submit" class="btn btn-success">OK</button>
                         </div>
-                    </div>
-                </li>
+                    </form>
+
+                    <ul class="row g-3" style="list-style-type:none">
+                        @foreach (var item in Model)
+                        {
+                            <li class="col-3">
+                                <a class="text-decoration-none" href="@Url.Action("Detail", "Book", new { id = item.ProductID })">
+                                    <div class="bg-white d-flex justify-content-around flex-wrap">
+                                        <div style="margin:10px">
+                                            <img src="~/Content/Images/@item.Image" alt="@item.Image" style="width:200px; height:180px" />
+                                        </div>
+                                        <div class="text-center">
+                                            <h5>@Html.DisplayFor(modelItem => item.ProductName)</h5>
+                                            <p>@Html.DisplayFor(modelItem => item.Author)</p>
+                                            <h5 style="color:red">@Html.DisplayFor(modelItem => item.Price)</h5>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             }
-        </ul>
-    }
+        </div>
+
+
+    </div>
+
+
+
     <div class="d-flex flex-row justify-content-around flex-wrap">
         <div class="paging-container">
             <br />

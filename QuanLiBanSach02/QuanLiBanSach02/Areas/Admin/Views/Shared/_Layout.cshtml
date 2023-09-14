@@ -25,73 +25,135 @@
 </head>
 
 <body>
-    <div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:12%; top: 0;">
-        <a href="/Admin/DashBoard/DashBoard" class="w3-bar-item w3-button">DashBroad</a>
-        <a href="/Admin/Category/ListCategory" class="w3-bar-item w3-button" >Thể loại</a>
-        <a href="/Admin/Product/ListProduct" class="w3-bar-item w3-button" >Sản phẩm</a>
-        <a href="/Admin/Stats/Index" class="w3-bar-item w3-button" >Thống kê</a>
-        @if (Session["UserID"] == null){
-            <a href="/Account/Login" class="w3-bar-item w3-button">Đăng nhập</a>
-        }
-        else {
-         <a class="w3-bar-item w3-button" href="@Url.Content("~/Account/Logout")">Đăng xuất</a>
-        }
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #3c4b64;width: 300px;">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <div class="dropdown pb-4 mt-2" style="margin: 0 auto;">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/Content/images/logo/admin.png" width="40" height="40" class="rounded-circle" alt="logo">
+                            <span class="d-none d-sm-inline mx-1">ADMIN</span>
+                        </a>
 
-        @*<div class="w3-dropdown-hover">
-            <button class="w3-button">
-                Dropdown
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="w3-dropdown-content w3-bar-block">
-                <a href="#" class="w3-bar-item w3-button">Link</a>
-                <a href="#" class="w3-bar-item w3-button">Link</a>
-            </div>*@
-        @*</div>*@
-    </div>
-
-
-    @*<div id="mySidenav" class="sidenav" style="width: 170px;">
-            <a href="/Admin/Home/">Trang chủ</a>
-            <a href="/Admin/Category/ListCategory">Thể loại</a>
-            <a href="/Admin/Product/ListProduct">Sản phẩm</a>
-            <a href="/Admin/Stats/Index">Thống kê</a>
-            <a href="/Admin/cart/cart">Giỏ hàng</a>
-        </div>*@
-
-    <div style="margin-left:13%;">
-        @RenderBody()
-    </div>
-    <!-- footer -->
-    @*<footer class="footer">
-            <div class="grid__auto">
-                <div class="footer-flex">
-                    <div class="footer__content">
-                        <div class="footer__content-container">
-                            <p>
-                                Giao hàng mọi nơi trong thời gian nhanh nhất,
-                                nhận hàng nhanh chóng. Hình ảnh chụp thật 100%,
-                                đảm bảo sản phẩm đúng như hình đăng tải.
-                                Liên hệ tư vấn nhanh chóng khi khách hàng đặt sản phẩm.
-                            </p>
-                        </div>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                            <li class="header__navbar-item">
+                                @if (Session["UserID"] == null)
+                                {
+                                    <a href="/Account/Login" class="nav-link text-danger fs-5">Đăng nhập</a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link text-danger fs-4" href="@Url.Content("~/Account/Logout")">Đăng xuất</a>
+                                }
+                            </li>
+                        </ul>
                     </div>
+                    <ul class="nav nav-pills flex-c olumn mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item sidebar-items">
+                            <a href="/Admin/DashBoard/DashBoard" class="admin-menu nav-link align-middle px-0" style="border-radius: 0px;
+                            font-size: 20px;
+                            display: block;
+                            padding: 15px;">
+                                <i class="fa-solid fa-store text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Trang chủ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item sidebar-items" style="">
+                            <a href="/Admin/Category/ListCategory" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
+                            display: block;
+                            padding: 15px;">
+                                <i class="fa-solid fa-bars-progress text-white"></i>
+                                <span class="ms-1 d-none d-sm-inline text-white">Quản lý thể loại</span>
+                            </a>
+                        </li>
 
-                    <div class="footer__contact">
-                        <div class="footer__contact-container">
-                            <h3>THÔNG TIN LIÊN HỆ</h3>
-                            <p><i class="fa-solid fa-map-location-dot"></i>126 Nguyễn Văn Công</p>
-                            <p><i class="fa-solid fa-phone"></i>Điện thoại:0971099313</p>
-                        </div>
-                    </div>
+                        <li class="nav-item sidebar-items">
+                            <a href="/Admin/Product/ListProduct" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
+                                                display: block;
+                                                padding: 15px;">
+                                <i class="fa-solid fa-database text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Quản lí Sản phẩm</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item sidebar-items">
+                            <a href="/Admin/Stats/Index" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
+                            display: block;
+                            padding: 15px;">
+                                <i class="fa-solid fa-chart-simple text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Thống kê doanh thu cửa hàng</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="copyright">Copyright &copy; Wolf</div>
             </div>
-        </footer>*@
-
-    <script src="~/Content/Clients/js.js"></script>
-    @RenderSection("scripts", required: false)
 
 
-    </>
+            @*<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:12%; top: 0;">
+                <a href="/Admin/DashBoard/DashBoard" class="w3-bar-item w3-button">DashBroad</a>
+                <a href="/Admin/Category/ListCategory" class="w3-bar-item w3-button">Thể loại</a>
+                <a href="/Admin/Product/ListProduct" class="w3-bar-item w3-button">Sản phẩm</a>
+                <a href="/Admin/Stats/Index" class="w3-bar-item w3-button">Thống kê</a>
+                @if (Session["UserID"] == null)
+                {
+                    <a href="/Account/Login" class="w3-bar-item w3-button">Đăng nhập</a>
+                }
+                else
+                {
+                    <a class="w3-bar-item w3-button" href="@Url.Content("~/Account/Logout")">Đăng xuất</a>
+                }*@
+
+            @*<div class="w3-dropdown-hover">
+                <button class="w3-button">
+                    Dropdown
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="w3-dropdown-content w3-bar-block">
+                    <a href="#" class="w3-bar-item w3-button">Link</a>
+                    <a href="#" class="w3-bar-item w3-button">Link</a>
+                </div>*@
+            @*</div>*@
+
+
+            @*<div id="mySidenav" class="sidenav" style="width: 170px;">
+                    <a href="/Admin/Home/">Trang chủ</a>
+                    <a href="/Admin/Category/ListCategory">Thể loại</a>
+                    <a href="/Admin/Product/ListProduct">Sản phẩm</a>
+                    <a href="/Admin/Stats/Index">Thống kê</a>
+                    <a href="/Admin/cart/cart">Giỏ hàng</a>
+                </div>*@
+
+            <div style="width: 1190px;background-color: #e5e9ec;">
+                @RenderBody()
+            </div>
+            <!-- footer -->
+            @*<footer class="footer">
+                    <div class="grid__auto">
+                        <div class="footer-flex">
+                            <div class="footer__content">
+                                <div class="footer__content-container">
+                                    <p>
+                                        Giao hàng mọi nơi trong thời gian nhanh nhất,
+                                        nhận hàng nhanh chóng. Hình ảnh chụp thật 100%,
+                                        đảm bảo sản phẩm đúng như hình đăng tải.
+                                        Liên hệ tư vấn nhanh chóng khi khách hàng đặt sản phẩm.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="footer__contact">
+                                <div class="footer__contact-container">
+                                    <h3>THÔNG TIN LIÊN HỆ</h3>
+                                    <p><i class="fa-solid fa-map-location-dot"></i>126 Nguyễn Văn Công</p>
+                                    <p><i class="fa-solid fa-phone"></i>Điện thoại:0971099313</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="copyright">Copyright &copy; Wolf</div>
+                    </div>
+                </footer>*@
+
+            <script src="~/Content/Clients/js.js"></script>
+            @RenderSection("scripts", required: false)
+
+
+            </>
 </body>
 </html>

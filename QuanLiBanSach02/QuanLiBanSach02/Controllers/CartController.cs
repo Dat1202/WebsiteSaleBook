@@ -96,6 +96,8 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                         Models.Order order = new Models.Order();
                         order.OrderDate = DateTime.Now;
                         order.UserID = userID;
+                        order.Status = "Tiền mặt";
+
                         da.Orders.Add(order);
                         da.SaveChanges();
 
@@ -160,27 +162,17 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
 
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
-            //getting the apiContext  
+            List<CartModels> cart = Session["cart"] as List<CartModels>;
             APIContext apiContext = PaypalConfiguration.GetAPIContext();
             try
             {
-                //A resource representing a Payer that funds a payment Payment Method as paypal  
-                //Payer Id will be returned when payment proceeds or click to pay  
                 string payerId = Request.Params["PayerID"];
                 if (string.IsNullOrEmpty(payerId))
                 {
-                    //this section will be executed first because PayerID doesn't exist  
-                    //it is returned by the create function call of the payment class  
-                    // Creating a payment  
-                    // baseURL is the url on which paypal sendsback the data.  
                     string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Cart/PaymentWithPayPal?";
-                    //here we are generating guid for storing the paymentID received in session  
-                    //which will be used in the payment execution  
                     var guid = Convert.ToString((new Random()).Next(100000));
-                    //CreatePayment function gives us the payment approval url  
-                    //on which payer is redirected for paypal account payment  
                     var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
-                    //get links returned from paypal in response to Create function call  
+
                     var links = createdPayment.links.GetEnumerator();
                     string paypalRedirectUrl = null;
                     while (links.MoveNext())
@@ -188,33 +180,51 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                         Links lnk = links.Current;
                         if (lnk.rel.ToLower().Trim().Equals("approval_url"))
                         {
-                            //saving the payapalredirect URL to which user will be redirected for payment  
                             paypalRedirectUrl = lnk.href;
                         }
                     }
-                    // saving the paymentID in the key guid  
                     Session.Add(guid, createdPayment.id);
+
                     return Redirect(paypalRedirectUrl);
                 }
                 else
                 {
-                    // This function exectues after receving all parameters for the payment  
                     var guid = Request.Params["guid"];
                     var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
-                    //If executed payment failed then we will show payment failure message to user  
                     if (executedPayment.state.ToLower() != "approved")
                     {
                         return View("FailureView");
                     }
 
-                    ClearCart();
+
+                    //Order("A@gmail.com", "0999999999");
+
+                    Models.Order order = new Models.Order();
+                    order.OrderDate = DateTime.Now;
+                    order.Status = "Paypal";
+
+                    da.Orders.Add(order);
+                    da.SaveChanges();
+
+                    var idOrder = order.OrderID;
+
+                    foreach (CartModels item in cart)
+                    {
+                        OrderDetail orderDetail = new OrderDetail();
+                        orderDetail.OrderID = idOrder;
+                        orderDetail.ProductID = item.ProductID;
+                        orderDetail.UnitPrice = item.Price;
+                        orderDetail.Quantity = item.Quantity;
+                        da.OrderDetails.Add(orderDetail);
+                        da.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 return View("FailureView");
             }
-            //on successful payment, show success page to user.  
+
             return View("SuccessView");
         }
         private PayPal.Api.Payment payment;

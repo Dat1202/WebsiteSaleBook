@@ -1,8 +1,5 @@
 ﻿@model QuanLiBanSach02.Models.Product
 
-
-
-
 @using (Html.BeginForm("CreateProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -37,7 +34,9 @@
                     </div>
 
                     <div class="form-floating">
-                        @Html.DropDownList("LoaiSP", (SelectList)ViewData["LoaiSP"], "--Chọn thể loại--", new { style = "text-align:center;width: 125px;height: 35px; border-radius: 18px; " })
+                        @Html.DropDownList("LoaiSP", null, new { style = "text-align:center;width: 150px;height: 35px; border-radius: 18px; " })
+
+                        @*@Html.DropDownList("LoaiSP", null , "--Chọn thể loại--", new { style = "text-align:center;width: 150px;height: 35px; border-radius: 18px; " })*@
                         @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
                     </div>
 
@@ -50,6 +49,7 @@
                     <div class="form-floating">
                         <input type="file" id="uploadhinh" name="uploadhinh" accept="image/*" />
                     </div>
+
                     <div class="text-danger text-center">
                         @Html.ValidationSummary()
                     </div>
