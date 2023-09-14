@@ -18,6 +18,7 @@ namespace QuanLiBanSach02.Models
         public User()
         {
             this.Orders = new HashSet<Order>();
+            this.Comments = new HashSet<Comment>();
         }
     
         public int UserID { get; set; }
@@ -28,5 +29,7 @@ namespace QuanLiBanSach02.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

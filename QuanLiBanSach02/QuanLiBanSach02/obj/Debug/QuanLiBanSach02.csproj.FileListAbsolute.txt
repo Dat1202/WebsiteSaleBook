@@ -103,7 +103,6 @@ D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Webpages
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Webpages.Razor.xml
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Helpers.xml
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\System.Web.Mvc.xml
-D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.csprojResolveAssemblyReference.cache
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.dll
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\obj\Debug\QuanLiBanSach02.pdb
 D:\check\WebsiteSaleBook\QuanLiBanSach02\QuanLiBanSach02\bin\Newtonsoft.Json.dll

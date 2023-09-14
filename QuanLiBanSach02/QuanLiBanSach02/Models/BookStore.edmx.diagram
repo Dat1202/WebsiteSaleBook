@@ -10,11 +10,14 @@
         <EntityTypeShape EntityType="BookStoreModel.Order" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.User" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.User" Width="1.5" PointX="0.5" PointY="6.375" IsExpanded="true" />
         <AssociationConnector Association="BookStoreModel.FK__Product__Categor__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.FK__OrderDeta__Order__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.FK__OrderDeta__Produ__5441852A" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.FK__Orders__UserID__5165187F" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BookStoreModel.Comment" Width="1.5" PointX="1.25" PointY="3.25" />
+        <AssociationConnector Association="BookStoreModel.FK__Comments__Produc__71D1E811" />
+        <AssociationConnector Association="BookStoreModel.FK__Comments__UserID__70DDC3D8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

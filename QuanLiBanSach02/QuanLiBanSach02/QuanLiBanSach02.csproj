@@ -270,6 +270,9 @@
       <DependentUpon>BookStore.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryProductCountModels.cs" />
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>BookStore.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Order.cs">
       <DependentUpon>BookStore.tt</DependentUpon>
     </Compile>
@@ -327,6 +330,8 @@
     <Content Include="Views\ListOrder\ListOrderDetail.cshtml" />
     <Content Include="Views\Cart\FailureView.cshtml" />
     <Content Include="Views\Cart\SuccessView.cshtml" />
+    <Content Include="Views\Book\ViewComments.cshtml" />
+    <Content Include="Views\Book\AddComment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<QuanLiBanSach02.Models.Comment>
+
+@{ Layout = null; }
+
+@foreach (var review in Model)
+{
+    <div class="p-3 border">
+        <div>Người đánh giá: @review.User.UserName</div>
+        @review.CreatedAt
+        <div>
+            <strong>Nội dung:</strong> @review.Content
+        </div>
+    </div>
+}
