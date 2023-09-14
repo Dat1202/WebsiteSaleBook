@@ -31,7 +31,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             try
             {
                 bool categoryExists = da.Categories.Any(s => s.CategoryName == category.CategoryName);
-                bool inputCategoryExists = da.Categories.Any(s => s.CategoryName == null);
+                bool inputCategoryExists = string.IsNullOrEmpty(category.CategoryName);
                 if (categoryExists)
                 {
                     TempData["ErrorAddCateMessage"] = "Thể loại đã tồn tại.";

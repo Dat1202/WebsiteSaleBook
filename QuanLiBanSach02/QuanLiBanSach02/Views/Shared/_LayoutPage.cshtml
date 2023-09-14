@@ -8,6 +8,8 @@
     <link href="~/Content/style/style1.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <title>@ViewBag.Title</title>
     <style>
         a{
@@ -32,7 +34,6 @@
                 </div>
                 <div class="p-3">
                     <form class="d-flex flex-row align-items-center flex-wrap mx-5 bg-white" style="border-radius:7px" action="/home/search">
-                        <label for="search" class="mx-2" my-1>Search</label>
                         <input type="search" class="form-control" style="width:400px;"
                                name="search" value="@ViewBag.Search" placeholder="Nhập tên sách..." />
                         <button type="submit" class="btn btn-link mx-1">
@@ -48,6 +49,7 @@
                     {
                         <a class="text-decoration-none" href="#">Welcome @Session["UserName"]!</a>
                         <a class="mx-2 text-decoration-none" href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+                        <a class="mx-2 text-decoration-none" href="@Url.Action("ListOrderDetail", "ListOrder")">Danh sách đơn hàng</a>
                     }
                     else
                     {

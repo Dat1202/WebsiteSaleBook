@@ -20,20 +20,7 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             ViewBag.ProductCount = productCount;
             ViewBag.CateCount = cateCount;
 
-            var categoryCounts = da.Products
-                               .Join(da.Categories,
-                                   p => p.CategoryID,
-                                   c => c.CategoryID,
-                                   (p, c) => new { Product = p, Category = c })
-                               .GroupBy(x => new { x.Category.CategoryID, x.Category.CategoryName })
-                               .Select(g => new CategoryProductCountModels
-                               {
-                                   CategoryName = g.Key.CategoryName,
-                                   ProductCount = g.Count()
-                               })
-                               .ToList();
-
-            return View(categoryCounts);
+            return View();
         }
 
         public ActionResult StatsByMonth()
@@ -41,6 +28,13 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
             var lsDataStatsByMonth = da.ThongKeDoanhThuTheoThang();
 
             return Json(lsDataStatsByMonth, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ThongKeSoLuongSachTheoTheLoai()
+        {
+            var ThongKeSoLuongSachTheoTheLoai = da.ThongKeSoLuongSachTheoTheLoai();
+
+            return Json(ThongKeSoLuongSachTheoTheLoai, JsonRequestBehavior.AllowGet);
         }
 
     }

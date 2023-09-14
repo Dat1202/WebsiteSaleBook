@@ -159,5 +159,10 @@ namespace QuanLiBanSach02.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ThongKeDoanhThuTheoThang_Result>("ThongKeDoanhThuTheoThang");
         }
+    
+        public virtual ObjectResult<ThongKeSoLuongSachTheoTheLoai_Result> ThongKeSoLuongSachTheoTheLoai()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ThongKeSoLuongSachTheoTheLoai_Result>("ThongKeSoLuongSachTheoTheLoai");
+        }
     }
 }

@@ -20,10 +20,11 @@
                         <div class="alert alert-danger">@TempData["ErrorAddCateMessage"]</div>
                     }
 
-                    @if (TempData["ErrorInputIsNull"] != null)
+                    else if (TempData["ErrorInputIsNull"] != null)
                     {
                         <div class="alert alert-danger">@TempData["ErrorInputIsNull"]</div>
                     }
+
                     <div class="form-floating">
                         @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
                         @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })

@@ -58,9 +58,7 @@
       <EntityTypeMapping TypeName="BookStoreModel.User">
         <MappingFragment StoreEntitySet="User">
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="FullName" ColumnName="FullName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="UserRole" ColumnName="UserRole" />
@@ -112,6 +110,14 @@
         <ComplexTypeMapping TypeName="BookStoreModel.ThongKeDoanhThuTheoThang_Result">
           <ScalarProperty Name="thang" ColumnName="thang" />
           <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ThongKeSoLuongSachTheoTheLoai" FunctionName="BookStoreModel.Store.ThongKeSoLuongSachTheoTheLoai">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookStoreModel.ThongKeSoLuongSachTheoTheLoai_Result">
+          <ScalarProperty Name="soluong" ColumnName="soluong" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

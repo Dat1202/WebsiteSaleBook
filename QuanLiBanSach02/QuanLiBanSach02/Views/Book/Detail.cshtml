@@ -54,9 +54,9 @@
             <ul class="row g-3" style="list-style-type:none; margin-left:-35px">
                 @foreach (var item in ViewBag.Products)
                 {
-                    <li class="col-3">
+                    <li class="col-3" style="min-height: 390px;"> 
                         <a class="text-decoration-none" href="@Url.Action("Detail", "Book", new { id = item.ProductID })">
-                            <div class="d-flex justify-content-around flex-wrap" style="background-color:gainsboro">
+                            <div class="d-flex justify-content-around flex-wrap h-100" style="background-color:gainsboro">
                                 <div style="margin:10px">
                                     <img src="~/Content/Images/@item.Image" alt="@item.Image" style="width:200px; height:180px" />
                                 </div>

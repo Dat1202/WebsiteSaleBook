@@ -58,9 +58,7 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="UserRole" Type="nvarchar" MaxLength="10" />
@@ -151,6 +149,7 @@
           <Parameter Name="thang" Type="int" Mode="In" />
         </Function>
         <Function Name="ThongKeDoanhThuTheoThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ThongKeSoLuongSachTheoTheLoai" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="BookStoreModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
@@ -240,9 +239,7 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -356,6 +353,7 @@
             <Parameter Name="thang" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ThongKeDoanhThuTheoThang" ReturnType="Collection(BookStoreModel.ThongKeDoanhThuTheoThang_Result)" />
+          <FunctionImport Name="ThongKeSoLuongSachTheoTheLoai" ReturnType="Collection(BookStoreModel.ThongKeSoLuongSachTheoTheLoai_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -379,6 +377,10 @@
         <ComplexType Name="ThongKeDoanhThuTheoThang_Result">
           <Property Type="Int32" Name="thang" Nullable="true" />
           <Property Type="Double" Name="TongTien" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ThongKeSoLuongSachTheoTheLoai_Result">
+          <Property Type="Int32" Name="soluong" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -443,9 +445,7 @@
             <EntityTypeMapping TypeName="BookStoreModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserRole" ColumnName="UserRole" />
@@ -497,6 +497,14 @@
               <ComplexTypeMapping TypeName="BookStoreModel.ThongKeDoanhThuTheoThang_Result">
                 <ScalarProperty Name="thang" ColumnName="thang" />
                 <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ThongKeSoLuongSachTheoTheLoai" FunctionName="BookStoreModel.Store.ThongKeSoLuongSachTheoTheLoai">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookStoreModel.ThongKeSoLuongSachTheoTheLoai_Result">
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

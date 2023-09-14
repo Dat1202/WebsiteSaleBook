@@ -6,13 +6,13 @@
 }
 
 <!--List products-->
-<div class="container">
+<div class="container mt-4">
     <ul class="row g-3" style="list-style-type:none">
         @foreach (var item in Model)
         {
             <li class="col-3">
                 <div class="bg-white d-flex justify-content-around flex-wrap">
-                    <div>
+                    <div class="p-3">
                         <img src="~/Content/Images/@item.Image" alt="@item.Image" style="width:200px; height:230px" />
                     </div>
                     <div>

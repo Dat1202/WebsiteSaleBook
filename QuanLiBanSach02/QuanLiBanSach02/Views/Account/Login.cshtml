@@ -12,16 +12,23 @@
         <div class="row mx-auto" style="width:45%">
             <div class="pb-1">
                 <div class="col-12">
-                    @Html.LabelFor(temp => temp.Email)
-                    @Html.TextBoxFor(temp => temp.Email, new { placeholder = "Email", @class = "form-control" })
-                    @Html.ValidationMessageFor(temp => temp.Email)
+                    <div class="form-floating mb-3">
+                        @*@Html.LabelFor(temp => temp.Email)*@
+                        @Html.TextBoxFor(temp => temp.Email, new { placeholder = "Email", @class = "form-control" })
+                        @Html.ValidationMessageFor(temp => temp.Email)
+                        <label for="floatingInput">Email</label>
+                    </div>
                 </div>
             </div>
             <div class="pb-1">
                 <div class="col-12">
-                    @Html.LabelFor(temp => temp.Password)
-                    @Html.TextBoxFor(temp => temp.Password, new { placeholder = "Mật khẩu", @class = "form-control" })
-                    @Html.ValidationMessageFor(temp => temp.Password)
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" name="password" id="floatingInput" placeholder="Password">
+                        <label for="floatingInput">Mật khẩu</label>
+                        @*@Html.LabelFor(temp => temp.Password)
+                @Html.TextBoxFor(temp => temp.Password, new { placeholder = "Mật khẩu", @class = "form-control" })
+                @Html.ValidationMessageFor(temp => temp.Password)*@
+                    </div>
                 </div>
             </div>
         </div>

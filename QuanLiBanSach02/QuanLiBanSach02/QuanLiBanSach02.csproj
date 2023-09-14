@@ -300,6 +300,9 @@
     <Compile Include="Models\ThongKeDoanhThuTheoThang_Result.cs">
       <DependentUpon>BookStore.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ThongKeSoLuongSachTheoTheLoai_Result.cs">
+      <DependentUpon>BookStore.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>BookStore.tt</DependentUpon>
     </Compile>
@@ -336,6 +339,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Content\Clients\" />
     <Folder Include="Content\Images\" />
+    <Folder Include="Content\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

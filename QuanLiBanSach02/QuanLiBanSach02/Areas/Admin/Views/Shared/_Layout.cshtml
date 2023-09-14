@@ -48,81 +48,55 @@
                             </li>
                         </ul>
                     </div>
-                    <ul class="nav nav-pills flex-c olumn mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <li class="nav-item sidebar-items">
-                            <a href="/Admin/DashBoard/DashBoard" class="admin-menu nav-link align-middle px-0" style="border-radius: 0px;
+                    @if (Session["UserID"] == null)
+                    {
+                        <div></div>
+                    }
+                    else
+                    {
+
+                        <ul class="nav nav-pills flex-c olumn mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                            <li class="nav-item sidebar-items">
+                                <a href="/Admin/DashBoard/DashBoard" class="admin-menu nav-link align-middle px-0" style="border-radius: 0px;
                             font-size: 20px;
                             display: block;
                             padding: 15px;">
-                                <i class="fa-solid fa-store text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Trang chủ</span>
-                            </a>
-                        </li>
-                        <li class="nav-item sidebar-items" style="">
-                            <a href="/Admin/Category/ListCategory" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
+                                    <i class="fa-solid fa-store text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Trang chủ</span>
+                                </a>
+                            </li>
+                            <li class="nav-item sidebar-items" style="">
+                                <a href="/Admin/Category/ListCategory" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
                             display: block;
                             padding: 15px;">
-                                <i class="fa-solid fa-bars-progress text-white"></i>
-                                <span class="ms-1 d-none d-sm-inline text-white">Quản lý thể loại</span>
-                            </a>
-                        </li>
+                                    <i class="fa-solid fa-bars-progress text-white"></i>
+                                    <span class="ms-1 d-none d-sm-inline text-white">Quản lý thể loại</span>
+                                </a>
+                            </li>
 
-                        <li class="nav-item sidebar-items">
-                            <a href="/Admin/Product/ListProduct" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
+                            <li class="nav-item sidebar-items">
+                                <a href="/Admin/Product/ListProduct" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
                                                 display: block;
                                                 padding: 15px;">
-                                <i class="fa-solid fa-database text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Quản lí Sản phẩm</span>
-                            </a>
-                        </li>
+                                    <i class="fa-solid fa-database text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Quản lí Sản phẩm</span>
+                                </a>
+                            </li>
 
-                        <li class="nav-item sidebar-items">
-                            <a href="/Admin/Stats/Index" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
+                            <li class="nav-item sidebar-items">
+                                <a href="/Admin/Stats/Index" class="admin__menu nav-link align-middle px-0" style="border-radius: 0px;font-size: 20px;
                             display: block;
                             padding: 15px;">
-                                <i class="fa-solid fa-chart-simple text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Thống kê doanh thu cửa hàng</span>
-                            </a>
-                        </li>
-                    </ul>
+                                    <i class="fa-solid fa-chart-simple text-white"></i> <span class="ms-1 d-none d-sm-inline text-white">Thống kê doanh thu cửa hàng</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
-
-
-            @*<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:12%; top: 0;">
-                <a href="/Admin/DashBoard/DashBoard" class="w3-bar-item w3-button">DashBroad</a>
-                <a href="/Admin/Category/ListCategory" class="w3-bar-item w3-button">Thể loại</a>
-                <a href="/Admin/Product/ListProduct" class="w3-bar-item w3-button">Sản phẩm</a>
-                <a href="/Admin/Stats/Index" class="w3-bar-item w3-button">Thống kê</a>
-                @if (Session["UserID"] == null)
-                {
-                    <a href="/Account/Login" class="w3-bar-item w3-button">Đăng nhập</a>
-                }
-                else
-                {
-                    <a class="w3-bar-item w3-button" href="@Url.Content("~/Account/Logout")">Đăng xuất</a>
-                }*@
-
-            @*<div class="w3-dropdown-hover">
-                <button class="w3-button">
-                    Dropdown
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="w3-dropdown-content w3-bar-block">
-                    <a href="#" class="w3-bar-item w3-button">Link</a>
-                    <a href="#" class="w3-bar-item w3-button">Link</a>
-                </div>*@
-            @*</div>*@
-
-
-            @*<div id="mySidenav" class="sidenav" style="width: 170px;">
-                    <a href="/Admin/Home/">Trang chủ</a>
-                    <a href="/Admin/Category/ListCategory">Thể loại</a>
-                    <a href="/Admin/Product/ListProduct">Sản phẩm</a>
-                    <a href="/Admin/Stats/Index">Thống kê</a>
-                    <a href="/Admin/cart/cart">Giỏ hàng</a>
-                </div>*@
 
             <div style="width: 1190px;background-color: #e5e9ec;">
                 @RenderBody()
             </div>
+
             <!-- footer -->
             @*<footer class="footer">
                     <div class="grid__auto">

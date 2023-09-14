@@ -148,7 +148,6 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
                     return View("Cart");
                 }
             }
-
         }
 
         public ActionResult FailureView()
@@ -163,70 +162,102 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
             List<CartModels> cart = Session["cart"] as List<CartModels>;
+            string sMsg = "<html><body><table border= \"1\" ><caption>Thông tin đặt hàng</caption><tr><th>STT</th><th>Tên hàng</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr>";
+            int i = 0;
+            double tongTien = 0;
+            string email = (string)Session["Email"];
+
             APIContext apiContext = PaypalConfiguration.GetAPIContext();
-            try
+            using (TransactionScope scope = new TransactionScope())
             {
-                string payerId = Request.Params["PayerID"];
-                if (string.IsNullOrEmpty(payerId))
+                try
                 {
-                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Cart/PaymentWithPayPal?";
-                    var guid = Convert.ToString((new Random()).Next(100000));
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
-
-                    var links = createdPayment.links.GetEnumerator();
-                    string paypalRedirectUrl = null;
-                    while (links.MoveNext())
+                    string payerId = Request.Params["PayerID"];
+                    if (string.IsNullOrEmpty(payerId))
                     {
-                        Links lnk = links.Current;
-                        if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                        string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Cart/PaymentWithPayPal?";
+                        var guid = Convert.ToString((new Random()).Next(100000));
+                        var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+
+                        var links = createdPayment.links.GetEnumerator();
+                        string paypalRedirectUrl = null;
+                        while (links.MoveNext())
                         {
-                            paypalRedirectUrl = lnk.href;
+                            Links lnk = links.Current;
+                            if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                            {
+                                paypalRedirectUrl = lnk.href;
+                            }
                         }
+                        Session.Add(guid, createdPayment.id);
+
+                        return Redirect(paypalRedirectUrl);
                     }
-                    Session.Add(guid, createdPayment.id);
-
-                    return Redirect(paypalRedirectUrl);
-                }
-                else
-                {
-                    var guid = Request.Params["guid"];
-                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
-                    if (executedPayment.state.ToLower() != "approved")
+                    else
                     {
-                        return View("FailureView");
-                    }
+                        var guid = Request.Params["guid"];
+                        var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+                        int userID = (int)Session["UserID"];
 
+                        if (executedPayment.state.ToLower() != "approved")
+                        {
+                            return View("FailureView");
+                        }
 
-                    //Order("A@gmail.com", "0999999999");
+                        Models.Order order = new Models.Order();
+                        order.OrderDate = DateTime.Now;
+                        order.Status = "Paypal";
+                        order.UserID = userID;
 
-                    Models.Order order = new Models.Order();
-                    order.OrderDate = DateTime.Now;
-                    order.Status = "Paypal";
-
-                    da.Orders.Add(order);
-                    da.SaveChanges();
-
-                    var idOrder = order.OrderID;
-
-                    foreach (CartModels item in cart)
-                    {
-                        OrderDetail orderDetail = new OrderDetail();
-                        orderDetail.OrderID = idOrder;
-                        orderDetail.ProductID = item.ProductID;
-                        orderDetail.UnitPrice = item.Price;
-                        orderDetail.Quantity = item.Quantity;
-                        da.OrderDetails.Add(orderDetail);
+                        da.Orders.Add(order);
                         da.SaveChanges();
+
+                        var idOrder = order.OrderID;
+
+                        foreach (CartModels item in cart)
+                        {
+                            OrderDetail orderDetail = new OrderDetail();
+                            orderDetail.OrderID = idOrder;
+                            orderDetail.ProductID = item.ProductID;
+                            orderDetail.UnitPrice = item.Price;
+                            orderDetail.Quantity = item.Quantity;
+                            da.OrderDetails.Add(orderDetail);
+                            da.SaveChanges();
+
+                            i++;
+                            sMsg += "<tr>";
+                            sMsg += "<td>" + i.ToString() + "</td>";
+                            sMsg += "<td>" + item.ProductName + "</td>";
+                            sMsg += "<td>" + item.Quantity.ToString() + "</td>";
+                            sMsg += "<td>" + item.Price.ToString() + "</td>";
+                            sMsg += "<td>" + String.Format("{0:#,###}", item.Quantity * item.Price) + "</td>";
+                            sMsg += "</tr>";
+                            tongTien += item.Quantity * item.Price;
+                        }
+                        sMsg += "<tr><th colspan='5'>Tổng cộng: " + String.Format("{0:#,###}", tongTien) + "</th></tr></table></body></html>";
+
+                        MailMessage mail = new MailMessage("2051052027dat@ou.edu.vn", email, "Thông tin đơn hàng", sMsg);
+                        SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                        client.EnableSsl = true;
+                        client.Credentials = new NetworkCredential("2051052027dat@ou.edu.vn", "Dat?123456789");
+                        mail.IsBodyHtml = true;
+                        client.Send(mail);
+
+                        scope.Complete();
+                        cart.Clear();
+
+                        return RedirectToAction("Cart");
                     }
                 }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    return View("FailureView");
+                }
             }
-            catch (Exception ex)
-            {
-                return View("FailureView");
-            }
-
-            return View("SuccessView");
         }
+
+
         private PayPal.Api.Payment payment;
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
         {
@@ -312,6 +343,6 @@ namespace QuanLiBanSach02.Areas.Admin.Controllers
         {
             Session["cart"] = new List<CartModels>();
         }
-    
-}
+
+    }
 }

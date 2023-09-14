@@ -60,9 +60,7 @@
       <PropertyRef Name="UserID" />
     </Key>
     <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -176,6 +174,7 @@
       <Parameter Name="thang" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="ThongKeDoanhThuTheoThang" ReturnType="Collection(BookStoreModel.ThongKeDoanhThuTheoThang_Result)" />
+    <FunctionImport Name="ThongKeSoLuongSachTheoTheLoai" ReturnType="Collection(BookStoreModel.ThongKeSoLuongSachTheoTheLoai_Result)" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -199,5 +198,9 @@
   <ComplexType Name="ThongKeDoanhThuTheoThang_Result">
     <Property Type="Int32" Name="thang" Nullable="true" />
     <Property Type="Double" Name="TongTien" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="ThongKeSoLuongSachTheoTheLoai_Result">
+    <Property Type="Int32" Name="soluong" Nullable="true" />
+    <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="50" />
   </ComplexType>
 </Schema>
