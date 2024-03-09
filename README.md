@@ -1,6 +1,7 @@
 * Đề tài: quản lý nhà sách
-- Ngôn ngữ sử dụng: C# (sử dụng Entity Framework (EF))
+- Ngôn ngữ sử dụng: C# 
 - Database sử dụng: SQL server
+- ASP.Net + Entity Frameword
 
 * Chức năng của hệ thống
 - Khách hàng
