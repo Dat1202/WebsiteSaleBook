@@ -32,18 +32,10 @@ namespace QuanLiBanSach02.Controllers
 
             if (fromPrice != null || toPrice != null)
             {
-                if (fromPrice != null && toPrice != null)
-                {
-                    products = products.Where(p => p.Price > fromPrice && p.Price < toPrice).ToList();
-                }
-                else if (fromPrice != null && toPrice == null)
-                {
-                    products = products.Where(p => p.Price > fromPrice).ToList();
-                }
-                else if (fromPrice == null && toPrice != null)
-                {
-                    products = products.Where(p => p.Price < toPrice).ToList();
-                }
+                products = products.Where(p =>
+                    (fromPrice == null || p.Price > fromPrice) &&
+                    (toPrice == null || p.Price < toPrice)
+                ).ToList();
             }
 
             ViewBag.CurrentSort = sortOrder;
@@ -69,14 +61,12 @@ namespace QuanLiBanSach02.Controllers
         {
             if (search == "")
             {
-                return RedirectToAction("Index");
-            }
-            else
-            {
                 List<Product> p = da.Products.Where(s => s.ProductName.Contains(search)).ToList();
                 search = ViewBag.Search;
                 return View(p);
             }
+
+             return RedirectToAction("Index");
         }
 
         public List<Product> GetProductsByCategory(int? categoryId)
@@ -85,10 +75,8 @@ namespace QuanLiBanSach02.Controllers
             {
                 return da.Products.ToList();
             }
-            else
-            {
-                return da.Products.Where(p => p.CategoryID == categoryId).ToList();
-            }
+
+            return da.Products.Where(p => p.CategoryID == categoryId).ToList();
         }
     }
 }
